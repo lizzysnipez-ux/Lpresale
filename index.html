@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Lizzy — The Oracle of Solana | Presale</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
@@ -20,25 +20,44 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: var(--bg-cream);
-            background-image: radial-gradient(circle at 15% 25%, rgba(186, 214, 104, 0.08) 0%, rgba(196, 107, 96, 0.02) 90%);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: var(--bg-cream);
+            background-image: radial-gradient(circle at 15% 25%, rgba(186, 214, 104, 0.06) 0%, rgba(196, 107, 96, 0.02) 90%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
             color: var(--deep-umber);
             line-height: 1.5;
+            min-height: 100vh;
+        }
+        
+        button, input { min-height: 44px; cursor: pointer; }
+        
+        .phantom-deep-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #AB9FF2 0%, #7B61FF 100%);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .lizzy-gradient-bg {
+            background: linear-gradient(135deg, var(--terracotta) 0%, #A85546 100%);
         }
         
         .card-elegant {
             background: #FFFFFF;
             border-radius: 28px;
             box-shadow: 0 20px 35px -12px rgba(68, 42, 29, 0.1);
-            border: 1px solid rgba(186, 214, 104, 0.35);
+            border: 1px solid rgba(186, 214, 104, 0.3);
         }
         
         .btn-primary {
             background: var(--deep-umber);
             color: white;
             transition: all 0.2s;
-            box-shadow: 0 2px 6px rgba(68, 42, 29, 0.12);
         }
         
         .btn-primary:hover {
@@ -57,7 +76,7 @@
         .stat-card {
             background: white;
             border-radius: 20px;
-            padding: 1rem;
+            padding: 0.75rem;
             border: 1px solid rgba(196, 107, 96, 0.2);
         }
         
@@ -91,672 +110,583 @@
             line-height: 1;
             color: var(--deep-umber);
         }
-        .roadmap-container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.roadmap-phase {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    position: relative;
-}
-
-.roadmap-timeline {
-    position: relative;
-    flex-shrink: 0;
-    width: 80px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.roadmap-dot {
-    width: 48px;
-    height: 48px;
-    background: white;
-    border: 2px solid var(--terracotta);
-    border-radius: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: var(--terracotta);
-    background: #fff;
-    z-index: 2;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.roadmap-dot.active {
-    background: var(--soft-green);
-    border-color: var(--deep-umber);
-    color: var(--deep-umber);
-}
-
-.roadmap-line {
-    width: 2px;
-    flex: 1;
-    background: linear-gradient(to bottom, var(--terracotta), rgba(196,107,96,0.2));
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
-
-.roadmap-card {
-    flex: 1;
-    background: white;
-    border-radius: 20px;
-    padding: 1.2rem 1.5rem;
-    border: 1px solid rgba(186, 214, 104, 0.4);
-    transition: all 0.2s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-}
-
-.roadmap-card:hover {
-    transform: translateX(4px);
-    border-color: var(--terracotta);
-    box-shadow: 0 8px 20px rgba(68,42,29,0.08);
-}
-
-.phase-badge {
-    display: inline-block;
-    background: rgba(186, 214, 104, 0.2);
-    padding: 0.2rem 0.7rem;
-    border-radius: 30px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--deep-umber);
-    margin-bottom: 0.5rem;
-}
-
-.phase-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--deep-umber);
-}
-
-@media (max-width: 768px) {
-    .roadmap-phase {
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-    .roadmap-timeline {
-        width: 100%;
-        flex-direction: row;
-        gap: 0.5rem;
-        align-items: center;
-        justify-content: flex-start;
-    }
-    .roadmap-line {
-        width: 100%;
-        height: 2px;
-        flex: none;
-    }
-    .roadmap-dot {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-    .phase-title {
-        font-size: 1.1rem;
-    }
-}
         
         @media (max-width: 640px) {
             .countdown-value { font-size: 1.2rem; }
             .countdown-box { min-width: 55px; padding: 0.5rem 0.2rem; }
         }
         
-        .recent-item {
-            animation: fadeInUp 0.3s ease-out;
+        /* Roadmap */
+        .roadmap-container {
+            max-width: 900px;
+            margin: 0 auto;
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .roadmap-phase {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
         }
+        
+        .roadmap-timeline {
+            position: relative;
+            flex-shrink: 0;
+            width: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .roadmap-dot {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 2px solid var(--terracotta);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--terracotta);
+            z-index: 2;
+        }
+        
+        .roadmap-dot.active {
+            background: var(--soft-green);
+            border-color: var(--deep-umber);
+            color: var(--deep-umber);
+        }
+        
+        .roadmap-line {
+            width: 2px;
+            flex: 1;
+            background: linear-gradient(to bottom, var(--terracotta), rgba(196,107,96,0.2));
+            margin-top: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .roadmap-card {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            padding: 1rem 1.25rem;
+            border: 1px solid rgba(186, 214, 104, 0.4);
+            transition: all 0.2s;
+        }
+        
+        .roadmap-card:hover {
+            transform: translateX(4px);
+            border-color: var(--terracotta);
+        }
+        
+        .phase-badge {
+            display: inline-block;
+            background: rgba(186, 214, 104, 0.2);
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--deep-umber);
+            margin-bottom: 0.5rem;
+        }
+        
+        .phase-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--deep-umber);
+        }
+        
+        @media (max-width: 768px) {
+            .roadmap-phase { flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+            .roadmap-timeline { width: 100%; flex-direction: row; gap: 0.5rem; align-items: center; justify-content: flex-start; }
+            .roadmap-line { width: 100%; height: 2px; flex: none; }
+            .roadmap-dot { width: 32px; height: 32px; font-size: 0.85rem; }
+            .phase-title { font-size: 1rem; }
+        }
+        
+        .recent-item { animation: fadeInUp 0.3s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .whiskey-tag {
-            background: linear-gradient(135deg, #D49A6A20, #C46B6010);
+            background: linear-gradient(135deg, #D49A6A15, #C46B6008);
             border-left: 3px solid var(--whiskey-glow);
         }
         
-        .footer-lizzy {
-            background: var(--deep-umber);
-            color: #DCD6CC;
-        }
-        
-        input:focus {
-            border-color: var(--terracotta);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(196, 107, 96, 0.2);
-        }
-        
-        .social-icon { transition: transform 0.2s; }
-        .social-icon:hover { transform: translateY(-2px); color: var(--terracotta); }
-        
-        .wallet-address {
-            font-family: 'Courier New', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
-        }
+        .footer-lizzy { background: var(--deep-umber); color: #DCD6CC; }
+        input:focus { border-color: var(--terracotta); outline: none; box-shadow: 0 0 0 2px rgba(196, 107, 96, 0.2); }
+        .social-link { transition: all 0.2s; }
+        .social-link:hover { transform: translateY(-2px); }
+        .wallet-address { font-family: 'Courier New', monospace; font-size: 0.7rem; letter-spacing: 0.5px; }
+        .chart-container { max-width: 280px; margin: 0 auto; }
+        @media (max-width: 768px) { .chart-container { max-width: 220px; } }
     </style>
 </head>
 <body>
 
- <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#E2DDD0]">
-        <div class="max-w-6xl mx-auto px-5 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <span class="font-semibold text-xl tracking-tight text-[#442A1D]">Lizzy</span>
-                <span class="text-xs text-[#C46B60] hidden sm:inline-block ml-1">Legend of Solana</span>
-            </div>
-            <button id="connectWalletNavBtn" class="btn-primary text-sm px-5 py-2 rounded-full font-medium"><i class="fas fa-wallet mr-1 text-xs"></i> Connect</button>
+<!-- Header -->
+<nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#E2DDD0]">
+    <div class="max-w-6xl mx-auto px-5 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <span class="font-semibold text-xl tracking-tight text-[#442A1D]">Lizzy</span>
+            <span class="text-xs text-[#C46B60] hidden sm:inline-block ml-1">Legend of Solana</span>
         </div>
-    </nav>
+        <button id="connectWalletNavBtn" class="btn-primary text-sm px-5 py-2 rounded-full font-medium"><i class="fas fa-wallet mr-1 text-xs"></i> Connect</button>
+    </div>
+</nav>
 
-    <main class="max-w-6xl mx-auto px-5 py-8 md:py-12">
+<main class="max-w-6xl mx-auto px-5 py-8 md:py-12">
+    
+    <!-- Hero -->
+    <div class="text-center mb-14">
+        <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-1.5 rounded-full border border-[#C46B60]/25 mb-5 text-sm">
+            <span class="w-2 h-2 rounded-full bg-[#BAD668] animate-pulse"></span>
+            <span class="text-[#442A1D] font-medium">Presale Live · Solana</span>
+        </div>
+        <div class="flex justify-center mb-6">
+            <div class="w-28 h-28 rounded-full overflow-hidden border-2 border-[#BAD668] shadow-lg bg-white">
+                <img id="lizzyPfpImg" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreidd6gfir73fdqnafxd2ezusuku7jm3flbjjrrzwas6ynqi7o4rx3u" alt="Lizzy" class="w-full h-full object-cover">
+            </div>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-[#442A1D]">$LIZZY</h1>
+        <p class="text-lg md:text-xl text-[#5C4332] max-w-2xl mx-auto mt-4">The Oracle of Solana. Pure conviction. <span class="font-semibold text-[#C46B60]">Lizzy holds forever.</span></p>
+        <div class="flex justify-center gap-4 mt-6 flex-wrap">
+            <div class="flex items-center gap-1 text-sm bg-white/60 px-3 py-1.5 rounded-full"><span class="w-2 h-2 rounded-full bg-[#BAD668]"></span> 9 Figures Portfolio</div>
+            <div class="flex items-center gap-1 text-sm bg-white/60 px-3 py-1.5 rounded-full"><i class="fas fa-whiskey-glass text-[#D49A6A] text-xs"></i><span class="ml-1"> Whiskey & Wins</span></div>
+        </div>
+    </div>
+
+    <!-- Whiskey quote -->
+    <div class="max-w-2xl mx-auto mb-10 whiskey-tag rounded-xl p-4 bg-white/60 shadow-sm text-center">
+        <i class="fas fa-whiskey-glass text-2xl text-[#D49A6A] mb-2 block"></i>
+        <p class="text-sm md:text-base text-[#442A1D]">Whiskey in hand. Profits on screen. Every stream was a play and his community moved with him. No empty calls. Just results. $LIZZY lives on Solana. Held. Not sold.</p>
+    </div>
+
+    <!-- Launch Countdown -->
+    <div class="max-w-2xl mx-auto mb-12">
+        <div class="card-elegant p-5 text-center">
+            <h3 class="text-lg uppercase tracking-wide text-[#C46B60] font-semibold">Market Launch</h3>
+            <div class="text-2xl font-bold text-[#442A1D] mt-1">May 7, 2026 — 8:00 PM EST</div>
+            <div class="grid grid-cols-4 gap-3 mt-5 max-w-md mx-auto">
+                <div class="countdown-box"><div class="countdown-value" id="countdownDays">00</div><div class="text-[10px] uppercase mt-1">DAYS</div></div>
+                <div class="countdown-box"><div class="countdown-value" id="countdownHours">00</div><div class="text-[10px] uppercase mt-1">HOURS</div></div>
+                <div class="countdown-box"><div class="countdown-value" id="countdownMins">00</div><div class="text-[10px] uppercase mt-1">MINS</div></div>
+                <div class="countdown-box"><div class="countdown-value" id="countdownSecs">00</div><div class="text-[10px] uppercase mt-1">SECS</div></div>
+            </div>
+            <p class="text-xs text-[#735F4E] mt-4">Raydium listing with locked liquidity · Lizzy's bag untouched</p>
+        </div>
+    </div>
+
+    <!-- Presale Card -->
+    <div id="presale" class="max-w-2xl mx-auto mb-20">
+        <div class="bg-white rounded-2xl md:rounded-3xl shadow-xl overflow-hidden border border-[#C46B60]/20">
+            <div class="lizzy-gradient-bg px-5 py-4 md:p-6 text-white">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl md:text-2xl font-bold">$LIZZY Presale</h2>
+                    <span class="bg-white/20 px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm">LIVE</span>
+                </div>
+                <p class="text-sm opacity-90 mt-1">Hard Cap: 3,000 SOL • Price increases every tier</p>
+                <div class="mt-4">
+                    <div class="flex justify-between text-xs mb-1"><span>Progress</span><span id="progressPercent">0%</span></div>
+                    <div class="h-2 bg-white/30 rounded-full overflow-hidden"><div id="progressFillBar" class="h-full bg-white rounded-full transition-all duration-500" style="width: 0%"></div></div>
+                    <div class="flex justify-between text-xs mt-1"><span>0 SOL</span><span id="currentRaisedDisplay">0 SOL</span><span>3,000 SOL</span></div>
+                </div>
+            </div>
+
+            <div class="p-5 md:p-7">
+                <!-- Mobile Wallet Help -->
+                <div id="mobileWalletHelp" class="mb-4 p-3 bg-blue-50 rounded-xl border border-blue-200 text-sm md:hidden">
+                    <p class="text-blue-700 font-medium"><i class="fas fa-mobile-alt mr-2"></i>Mobile users:</p>
+                    <div class="mt-2 space-y-2">
+                        <button id="openInPhantomBtn" class="phantom-deep-link w-full text-center"><i class="fas fa-external-link-alt mr-2"></i>Open in Phantom App</button>
+                        <button id="installPhantomBtn" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg text-center"><i class="fas fa-download mr-2"></i>Install Phantom</button>
+                    </div>
+                </div>
+
+                <!-- Wallet Status -->
+                <div id="walletPromptArea" class="mb-5 p-4 bg-[#F7F5EF] rounded-xl border border-[#E2DDD0] text-center">
+                    <p class="text-sm text-[#735F4E]"><i class="fas fa-link mr-1 text-[#C46B60]"></i> Connect wallet to participate</p>
+                    <button id="presaleConnectBtnInline" class="btn-primary w-full mt-3 py-3 rounded-xl text-sm font-medium">Connect Phantom / Solflare</button>
+                </div>
+                
+                <div id="walletInfoArea" class="hidden mb-5 p-3 bg-[#F1F5E8] rounded-xl border border-[#BAD668]/40">
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <div class="flex items-center gap-1"><i class="fas fa-circle text-[#BAD668] text-[10px]"></i><span id="walletShortAddr" class="wallet-address text-xs md:text-sm">xxxxx</span></div>
+                        <div class="font-medium text-sm"><i class="fas fa-coins text-[#C46B60] mr-1"></i><span id="balanceDisplay">0.00 SOL</span></div>
+                        <button id="disconnectWalletBtn" class="text-xs text-[#C46B60] underline">disconnect</button>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="grid grid-cols-3 gap-2 md:gap-3 mb-6">
+                    <div class="stat-card text-center"><p class="text-xs text-[#8B6F5C]">Raised</p><p class="text-lg md:text-xl font-bold text-[#442A1D]" id="totalRaisedDisplay">892 SOL</p></div>
+                    <div class="stat-card text-center"><p class="text-xs text-[#8B6F5C]">Buyers</p><p class="text-lg md:text-xl font-bold text-[#442A1D]" id="totalBuyersDisplay">534</p></div>
+                    <div class="stat-card text-center"><p class="text-xs text-[#8B6F5C]">Tokens/SOL</p><p class="text-lg md:text-xl font-bold text-[#C46B60]" id="pricePerSolDisplay">280K</p></div>
+                </div>
+
+                <!-- Amount Input -->
+                <div class="mb-5">
+                    <label class="block font-semibold text-[#442A1D] mb-2">Amount (SOL)</label>
+                    <input type="number" id="solAmountInput" value="1" step="0.5" min="0.5" max="500" class="w-full py-3 px-4 rounded-xl bg-white border border-[#DFD9CE] text-lg font-medium">
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <button data-quick="1" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">1 SOL</button>
+                        <button data-quick="5" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">5 SOL</button>
+                        <button data-quick="10" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">10 SOL</button>
+                        <button data-quick="25" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">25 SOL</button>
+                        <button data-quick="100" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">100 SOL</button>
+                    </div>
+                </div>
+
+                <!-- Referral Code -->
+                <div class="mb-5">
+                    <label class="block font-semibold text-[#442A1D] mb-2">Referral code <span class="text-xs font-normal text-[#8B6F5C]">(+5% bonus)</span></label>
+                    <input type="text" id="referralCodeInput" class="w-full py-2.5 px-4 rounded-xl border border-[#DFD9CE]" placeholder="Enter referral code">
+                </div>
+
+                <!-- Token Preview Box -->
+                <div class="bg-[#FAF8F2] rounded-xl p-4 mb-6 border border-[#E2DDD0]">
+                    <div class="flex justify-between text-sm"><span>Base tokens:</span><span id="baseTokenPreviewVal">0</span></div>
+                    <div id="bonusPreviewRow" class="flex justify-between text-sm text-[#BAD668] hidden mt-1"><span>Bonus (+5%):</span><span id="bonusTokenVal">0</span></div>
+                    <div class="border-t border-[#E2DDD0] my-2"></div>
+                    <div class="flex justify-between font-bold text-base md:text-lg"><span>Total $LIZZY:</span><span id="totalTokenFinal" class="text-[#C46B60]">0</span></div>
+                    <p class="text-xs text-center mt-2 text-[#8B6F5C]">Airdropped after presale ends</p>
+                </div>
+
+                <button id="buyTokenBtn" class="btn-primary w-full py-4 rounded-xl font-bold text-base disabled:opacity-50 disabled:cursor-not-allowed" disabled>Connect wallet to buy</button>
+                <div id="transactionMessage" class="mt-3 text-sm text-center hidden"></div>
+
+                <!-- Recent Believers -->
+                <div class="mt-6 pt-4 border-t border-[#E2DDD0]">
+                    <div class="flex justify-between items-center mb-3">
+                        <p class="font-medium text-[#442A1D]">Recent Believers</p>
+                        <span class="text-xs text-[#BAD668] animate-pulse">● Live</span>
+                    </div>
+                    <div id="recentPurchasesList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                        <div class="text-center text-xs text-[#8B6F5C] py-2">Loading transactions...</div>
+                    </div>
+                    <p class="text-center text-[10px] text-[#8B6F5C] mt-3">New buys appear in real-time</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Section - Fixed social links (clean buttons) -->
+    <div id="story" class="grid md:grid-cols-2 gap-10 items-center my-20">
+        <div>
+            <span class="text-sm uppercase tracking-wider text-[#C46B60] font-semibold">The Legacy</span>
+            <div class="gradient-underline my-2 ml-0"></div>
+            <h2 class="text-3xl md:text-4xl font-bold text-[#442A1D] mt-2">Whiskey, Trades & Loyalty</h2>
+            <p class="text-[#4D3829] mt-4 leading-relaxed">Lizzy represents more than influence — he represents alignment. A community built on shared wins, sharp execution, and real conviction. <span class="font-semibold">$LIZZY is his immortal legacy on Solana.</span> A symbol of consistency in a volatile space.</p>
+            
+            <!-- Social Links - Clean button style -->
+            <div class="flex flex-wrap gap-3 mt-6">
+                <a href="https://www.instagram.com/fernandolizzario" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-[#E2DDD0] hover:border-[#C46B60] hover:bg-[#C46B60]/5 transition text-sm font-medium social-link">
+                    <i class="fab fa-instagram text-[#C46B60]"></i>
+                    Instagram
+                </a>
+                <a href="https://t.me/lizzytrades" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-[#E2DDD0] hover:border-[#C46B60] hover:bg-[#C46B60]/5 transition text-sm font-medium social-link">
+                    <i class="fab fa-telegram text-[#C46B60]"></i>
+                    Telegram Channel
+                </a>
+                <a href="https://t.me/lizzysnipes" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-[#E2DDD0] hover:border-[#C46B60] hover:bg-[#C46B60]/5 transition text-sm font-medium social-link">
+                    <i class="fab fa-telegram-plane text-[#C46B60]"></i>
+                    Direct Message
+                </a>
+            </div>
+            <p class="text-xs text-[#8B6F5C] mt-3">Lizzy shares every trade and lifestyle update on Telegram</p>
+        </div>
+        <div class="flex justify-center md:justify-end">
+            <div class="w-64 h-64 rounded-2xl overflow-hidden shadow-xl border-2 border-white">
+                <img id="lizzyStoryImg" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreih7sfoybq3rq24i7qiuj7batp3j3girlmky34myu3gagpowbd2t4u" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </div>
+
+    <!-- Tokenomics with smaller pie chart -->
+    <div id="tokenomics" class="card-elegant p-6 md:p-8 my-20">
+        <div class="text-center mb-6"><h3 class="text-2xl font-bold text-[#442A1D]">Tokenomics · 1B $LIZZY</h3><div class="gradient-underline my-2"></div></div>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="chart-container"><canvas id="lizzyTokenChart" width="280" height="280" style="max-width: 100%; height: auto;"></canvas></div>
+            <div class="space-y-3">
+                <div class="flex justify-between border-b pb-2"><span>Presale allocation</span><span class="font-semibold">40% · 400M</span></div>
+                <div class="flex justify-between border-b pb-2"><span>Liquidity (locked)</span><span class="font-semibold">30% · 300M</span></div>
+                <div class="flex justify-between border-b pb-2"><span>Marketing</span><span class="font-semibold">15% · 150M</span></div>
+                <div class="flex justify-between border-b pb-2"><span>Community rewards</span><span class="font-semibold">10% · 100M</span></div>
+                <div class="flex justify-between border-b pb-2"><span>Lizzy Reserve (never sold)</span><span class="font-semibold text-[#C46B60]">5% · 50M</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div id="roadmap" class="my-20">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#442A1D]">Roadmap</h2>
+            <div class="gradient-underline my-3"></div>
+            <p class="text-[#5C4332] max-w-lg mx-auto">From presale ignition to market dominance</p>
+        </div>
         
-        <!-- Hero -->
-        <div class="text-center mb-14">
-            <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-1.5 rounded-full border border-[#C46B60]/25 mb-5 text-sm">
-                <span class="w-2 h-2 rounded-full bg-[#BAD668] animate-pulse"></span>
-                <span class="text-[#442A1D] font-medium">Presale Live · Solana</span>
-            </div>
-            <div class="flex justify-center mb-6">
-                <div class="w-28 h-28 rounded-full overflow-hidden border-2 border-[#BAD668] shadow-lg bg-white">
-                    <img id="lizzyPfpImg" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreidd6gfir73fdqnafxd2ezusuku7jm3flbjjrrzwas6ynqi7o4rx3u" alt="Lizzy" class="w-full h-full object-cover">
+        <div class="roadmap-container max-w-4xl mx-auto">
+            <div class="roadmap-phase">
+                <div class="roadmap-timeline">
+                    <div class="roadmap-dot active">1</div>
+                    <div class="roadmap-line"></div>
+                </div>
+                <div class="roadmap-card">
+                    <div class="phase-badge">Q2 2026</div>
+                    <div class="phase-title">Presale & Community</div>
+                    <p class="text-sm text-[#5C4332] mt-2">Aggressive marketing, Lizzy live alpha calls, early bonus tiers, first 1,000 holders</p>
                 </div>
             </div>
-            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-[#442A1D]">$LIZZY</h1>
-            <p class="text-lg md:text-xl text-[#5C4332] max-w-2xl mx-auto mt-4">The Oracle of Solana. Pure conviction. <span class="font-semibold text-[#C46B60]">Lizzy holds forever.</span></p>
-            <div class="flex justify-center gap-4 mt-6 flex-wrap">
-                <div class="flex items-center gap-1 text-sm bg-white/60 px-3 py-1.5 rounded-full"><span class="w-2 h-2 rounded-full bg-[#BAD668]"></span> 9 Figures Portfolio </div>
-                <div class="flex items-center gap-1 text-sm bg-white/60 px-3 py-1.5 rounded-full"><i class="fas fa-whiskey-glass text-[#D49A6A] text-xs"></i><span class="ml-1"> Whiskey & Wins</span></div>
-            </div>
-        </div>
-
-        <!-- Whiskey quote -->
-        <div class="max-w-2xl mx-auto mb-10 whiskey-tag rounded-xl p-4 flex items-center gap-3 bg-white/60 shadow-sm">
-            <i class="fas fa-whiskey-glass text-2xl text-[#D49A6A]"></i>
-            <p class="text-sm md:text-base text-[#442A1D]"><strong class="font-bold">Whiskey in hand. Profits on screen.</strong> Every stream was a play and his community moved with him. No empty calls. Just results. $LIZZY lives on Solana. Held. Not sold.
-</p>
-    <i class="fas fa-quote-right text-[#D49A6A] text-xl opacity-50 mt-3 block"></i>
-</div>
-        </div>
-
-        <!-- Launch Countdown - FIXED -->
-        <div class="max-w-2xl mx-auto mb-12">
-            <div class="card-elegant p-5 text-center">
-                <h3 class="text-lg uppercase tracking-wide text-[#C46B60] font-semibold">Market Launch</h3>
-                <div class="text-2xl font-bold text-[#442A1D] mt-1">May 7, 2026 — 8:00 PM EST</div>
-                <div class="grid grid-cols-4 gap-3 mt-5 max-w-md mx-auto">
-                    <div class="countdown-box"><div class="countdown-value" id="countdownDays">00</div><div class="text-[10px] uppercase mt-1">DAYS</div></div>
-                    <div class="countdown-box"><div class="countdown-value" id="countdownHours">00</div><div class="text-[10px] uppercase mt-1">HOURS</div></div>
-                    <div class="countdown-box"><div class="countdown-value" id="countdownMins">00</div><div class="text-[10px] uppercase mt-1">MINS</div></div>
-                    <div class="countdown-box"><div class="countdown-value" id="countdownSecs">00</div><div class="text-[10px] uppercase mt-1">SECS</div></div>
+            
+            <div class="roadmap-phase">
+                <div class="roadmap-timeline">
+                    <div class="roadmap-dot">2</div>
+                    <div class="roadmap-line"></div>
                 </div>
-                <p class="text-xs text-[#735F4E] mt-4">Raydium listing with locked liquidity · Lizzy's bag untouched</p>
-            </div>
-        </div>
-
-        <!-- Presale Card -->
-        <div id="presale" class="max-w-2xl mx-auto mb-20">
-            <div class="card-elegant overflow-hidden">
-                <div class="bg-gradient-to-r from-[#FCF9F2] to-white px-6 py-5 border-b border-[#EFECE5]">
-                    <h2 class="text-2xl font-bold text-[#442A1D]">Lizzy Presale</h2>
-                    <div class="flex justify-between text-sm text-[#735F4E] mt-1"><span>Hard cap: 3,000 SOL</span><span>Min: 0.5 SOL · Max: 500 SOL</span></div>
+                <div class="roadmap-card">
+                    <div class="phase-badge">MAY 7 LAUNCH</div>
+                    <div class="phase-title">Raydium Listing & LP Lock</div>
+                    <p class="text-sm text-[#5C4332] mt-2">Official DEX launch at 8PM EST, liquidity locked 1 year, contract renounced</p>
                 </div>
-                <div class="p-6 md:p-7">
-                    <div class="grid grid-cols-3 gap-3 mb-6">
-                        <div class="stat-card text-center"><p class="text-xs text-[#8B6F5C]">Raised</p><p class="text-xl font-bold text-[#442A1D]" id="totalRaisedDisplay">0 SOL</p></div>
-                        <div class="stat-card text-center"><p class="text-xs text-[#8B6F5C]">Buyers</p><p class="text-xl font-bold text-[#442A1D]" id="totalBuyersDisplay">0</p></div>
-                        <div class="stat-card text-center"><p class="text-xs text-[#8B6F5C]">Tokens/SOL</p><p class="text-xl font-bold text-[#C46B60]" id="pricePerSolDisplay">280K</p></div>
-                    </div>
-                    <div class="mb-6"><div class="flex justify-between text-sm mb-1"><span>Progress to 3,000 SOL</span><span id="progressPercentText">0%</span></div><div class="progress-track"><div class="progress-fill" id="progressFillBar" style="width: 0%;"></div></div></div>
-                    
-                    <div id="walletPromptArea" class="mb-5 p-3 bg-[#F7F5EF] rounded-xl border border-[#E2DDD0] text-center">
-                        <p class="text-sm text-[#735F4E]"><i class="fas fa-link mr-1 text-[#C46B60]"></i> Connect wallet to participate</p>
-                        <button id="presaleConnectBtnInline" class="btn-primary w-full mt-2 py-2 rounded-xl text-sm font-medium">Connect Phantom / Solflare</button>
-                    </div>
-                    <div id="walletInfoArea" class="hidden mb-5 p-3 bg-[#F1F5E8] rounded-xl border border-[#BAD668]/40">
-                        <div class="flex justify-between items-center flex-wrap gap-2">
-                            <div class="flex items-center gap-1"><i class="fas fa-circle text-[#BAD668] text-[10px]"></i><span id="walletShortAddr" class="wallet-address">xxxxx</span></div>
-                            <div class="font-medium text-sm"><i class="fas fa-coins text-[#C46B60] mr-1"></i><span id="balanceDisplay">0.00 SOL</span></div>
-                            <button id="disconnectWalletBtn" class="text-xs text-[#C46B60] underline">disconnect</button>
-                        </div>
-                    </div>
-
-                    <div class="mb-5">
-                        <label class="block font-semibold text-[#442A1D] mb-1">Amount (SOL)</label>
-                        <input type="number" id="solAmountInput" value="1" step="0.5" min="0.5" max="500" class="w-full py-3 px-4 rounded-xl bg-white border border-[#DFD9CE] text-lg font-medium">
-                        <div class="flex flex-wrap gap-2 mt-2">
-                            <button data-quick="1" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">1 SOL</button>
-                            <button data-quick="5" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">5 SOL</button>
-                            <button data-quick="10" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">10 SOL</button>
-                            <button data-quick="25" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">25 SOL</button>
-                            <button data-quick="100" class="quickAmountBtn text-sm px-3 py-1.5 rounded-full bg-[#F2EFE8] hover:bg-[#E8E1D4] transition">100 SOL</button>
-                        </div>
-                    </div>
-
-                    <div class="mb-5">
-                        <label class="block font-semibold text-[#442A1D] mb-1">Referral code <span class="text-xs font-normal text-[#8B6F5C]">(+5% bonus)</span></label>
-                        <input type="text" id="referralCodeInput" class="w-full py-2.5 px-4 rounded-xl border border-[#DFD9CE]" placeholder="Enter referral code">
-                    </div>
-
-                    <div class="bg-[#FAF8F2] rounded-2xl p-4 mb-6">
-                        <div class="flex justify-between text-sm"><span>$LIZZY you receive</span><span id="baseTokenPreviewVal">0</span></div>
-                        <div id="bonusPreviewRow" class="flex justify-between text-sm text-[#BAD668] hidden"><span>+5% referral bonus</span><span id="bonusTokenVal">0</span></div>
-                        <div class="border-t border-[#E2DDD0] my-2"></div>
-                        <div class="flex justify-between font-bold text-lg"><span>Total $LIZZY</span><span id="totalTokenFinal" class="text-[#C46B60]">0</span></div>
-                        <p class="text-xs text-center mt-2 text-[#8B6F5C]">Airdropped after presale ends</p>
-                    </div>
-
-                    <button id="buyTokenBtn" class="btn-primary w-full py-4 rounded-xl font-bold text-base disabled:opacity-50 disabled:cursor-not-allowed" disabled>Connect wallet to buy</button>
-                    <div id="transactionMessage" class="mt-3 text-sm text-center hidden"></div>
-
-                    <!-- Recent Believers - Clean wallet addresses only -->
-                    <div class="mt-7 pt-3 border-t border-[#E2DDD0]">
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="font-medium text-[#442A1D]">Recent Believers</p>
-                            <span class="text-xs text-[#BAD668] pulse">Live</span>
-                        </div>
-                        <div id="recentPurchasesList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
-                            <div class="text-center text-xs text-[#8B6F5C] py-2">Loading transactions...</div>
-                        </div>
-                        <p class="text-center text-[10px] text-[#8B6F5C] mt-3">New buys appear in real-time</p>
-                    </div>
+            </div>
+            
+            <div class="roadmap-phase">
+                <div class="roadmap-timeline">
+                    <div class="roadmap-dot">3</div>
+                    <div class="roadmap-line"></div>
+                </div>
+                <div class="roadmap-card">
+                    <div class="phase-badge">Q3 2026</div>
+                    <div class="phase-title">CEX Listings & Expansion</div>
+                    <p class="text-sm text-[#5C4332] mt-2">Gate.io, MEXC, KuCoin applications, KOL partnerships, Lizzy livestreams</p>
+                </div>
+            </div>
+            
+            <div class="roadmap-phase">
+                <div class="roadmap-timeline">
+                    <div class="roadmap-dot">4</div>
+                </div>
+                <div class="roadmap-card">
+                    <div class="phase-badge">Q4 2026+</div>
+                    <div class="phase-title">Ecosystem & Utility</div>
+                    <p class="text-sm text-[#5C4332] mt-2">Lizzy DAO, staking rewards, burn mechanics, cross-chain expansion</p>
                 </div>
             </div>
         </div>
-
-        <!-- Story -->
-        <div id="story" class="grid md:grid-cols-2 gap-10 items-center my-20">
-            <div>
-                <span class="text-sm uppercase tracking-wider text-[#C46B60] font-semibold">The Legacy</span>
-                <div class="gradient-underline my-2 ml-0"></div>
-                <h2 class="text-3xl md:text-4xl font-bold text-[#442A1D] mt-2">Whiskey, Trades & Loyalty</h2>
-                <p class="text-[#4D3829] mt-4 leading-relaxed">Lizzy represents more than influence he represents alignment. A community built on shared wins, sharp execution, and real conviction. <span class="font-semibold">$LIZZY is his immortal legacy on Solana.</span> A symbol of consistency in a volatile space.
-</p>
-                <div class="mt-5 flex gap-5">
-                    <a href="https://www.instagram.com/fernandolizzario" target="_blank" class="social-icon text-2xl text-[#442A1D] hover:text-[#C46B60]"><i class="fab fa-instagram"></i></a>
-                    <a href="https://t.me/lizzysnipes" target="_blank" class="social-icon text-2xl text-[#442A1D] hover:text-[#C46B60]"><i class="fab fa-telegram"></i> DM</a>
-                    <a href="https://t.me/lizzytrades" target="_blank" class="social-icon text-2xl text-[#442A1D] hover:text-[#C46B60]"><i class="fab fa-telegram"></i> Channel</a>
-                </div>
-            </div>
-            <div class="flex justify-center md:justify-end">
-                <div class="w-64 h-64 rounded-2xl overflow-hidden shadow-xl border-2 border-white">
-                    <img id="lizzyStoryImg" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreih7sfoybq3rq24i7qiuj7batp3j3girlmky34myu3gagpowbd2t4u" class="w-full h-full object-cover">
-                </div>
-            </div>
-        </div>
-
-        <!-- Tokenomics -->
-        <div id="tokenomics" class="card-elegant p-6 md:p-8 my-20">
-            <div class="text-center mb-6"><h3 class="text-2xl font-bold text-[#442A1D]">Tokenomics · 1B $LIZZY</h3><div class="gradient-underline my-2"></div></div>
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div><canvas id="lizzyTokenChart" width="400" height="400" style="max-width: 100%; height: auto;"></canvas></div>
-                <div class="space-y-3">
-                    <div class="flex justify-between border-b pb-2"><span>Presale allocation</span><span class="font-semibold">40% · 400M</span></div>
-                    <div class="flex justify-between border-b pb-2"><span>Liquidity (locked)</span><span class="font-semibold">30% · 300M</span></div>
-                    <div class="flex justify-between border-b pb-2"><span>Marketing</span><span class="font-semibold">15% · 150M</span></div>
-                    <div class="flex justify-between border-b pb-2"><span>Community rewards</span><span class="font-semibold">10% · 100M</span></div>
-                    <div class="flex justify-between border-b pb-2"><span>Lizzy Reserve (never sold)</span><span class="font-semibold text-[#C46B60]">5% · 50M</span></div>
-                </div>
-            </div>
-        </div>
-
-<!-- Timeline Roadmap - Clean & Professional -->
-<div id="roadmap" class="my-20">
-    <div class="text-center mb-10">
-        <h2 class="text-3xl md:text-4xl font-bold text-[#442A1D]">Roadmap</h2>
-        <div class="gradient-underline my-3"></div>
-        <p class="text-[#5C4332] max-w-lg mx-auto">From presale ignition to market dominance</p>
     </div>
     
-    <div class="roadmap-container max-w-4xl mx-auto">
-        <!-- Phase 1 -->
-        <div class="roadmap-phase">
-            <div class="roadmap-timeline">
-                <div class="roadmap-dot active">1</div>
-                <div class="roadmap-line"></div>
-            </div>
-            <div class="roadmap-card">
-                <div class="phase-badge">Q2 2026</div>
-                <div class="phase-title">Presale & Community</div>
-                <p class="text-sm text-[#5C4332] mt-2">Aggressive marketing, Lizzy live alpha calls, early bonus tiers, first 1,000 holders</p>
-                <ul class="text-xs text-[#735F4E] mt-2 list-disc pl-4">
-                    <li>50% early bonus tier</li>
-                    <li>Telegram & Twitter expansion</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Phase 2 -->
-        <div class="roadmap-phase">
-            <div class="roadmap-timeline">
-                <div class="roadmap-dot">2</div>
-                <div class="roadmap-line"></div>
-            </div>
-            <div class="roadmap-card">
-                <div class="phase-badge">MAY 7 LAUNCH</div>
-                <div class="phase-title">Raydium Listing & LP Lock</div>
-                <p class="text-sm text-[#5C4332] mt-2">Official DEX launch at 8PM EST, liquidity locked 1 year, contract renounced</p>
-                <ul class="text-xs text-[#735F4E] mt-2 list-disc pl-4">
-                    <li>Starting market cap momentum</li>
-                    <li>DexTools trending campaign</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Phase 3 -->
-        <div class="roadmap-phase">
-            <div class="roadmap-timeline">
-                <div class="roadmap-dot">3</div>
-                <div class="roadmap-line"></div>
-            </div>
-            <div class="roadmap-card">
-                <div class="phase-badge">Q3 2026</div>
-                <div class="phase-title">CEX Listings & Expansion</div>
-                <p class="text-sm text-[#5C4332] mt-2">Top-tier exchange applications, KOL partnerships, Lizzy livestreams</p>
-                <ul class="text-xs text-[#735F4E] mt-2 list-disc pl-4">
-                    <li>Gate.io, MEXC, KuCoin applications</li>
-                    <li>Global marketing push</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Phase 4 -->
-        <div class="roadmap-phase">
-            <div class="roadmap-timeline">
-                <div class="roadmap-dot">4</div>
-            </div>
-            <div class="roadmap-card">
-                <div class="phase-badge">Q4 2026+</div>
-                <div class="phase-title">Ecosystem & Utility</div>
-                <p class="text-sm text-[#5C4332] mt-2">Lizzy DAO, staking rewards, and burn mechanics. Long-term vision</p>
-                <ul class="text-xs text-[#735F4E] mt-2 list-disc pl-4">
-                    <li>Cross-chain expansion</li>
-                    <li>Merch + real world events</li>
-                </ul>
-            </div>
+    <!-- Art Gallery -->
+    <div class="my-16">
+        <div class="text-center mb-6"><h3 class="text-2xl font-bold text-[#442A1D]">Lizzy Art Gallery</h3><div class="gradient-underline my-2"></div><p class="text-sm text-gray-500 mt-1">Ion Play Small</p></div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-5">
+            <div class="rounded-xl overflow-hidden shadow-md border bg-white"><img id="lizzyArt1" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreigyahzl7chl7zanad3puau2cm57xle3xxuvxnxrovds6iecg6cqhq" class="w-full h-48 object-cover"></div>
+            <div class="rounded-xl overflow-hidden shadow-md border bg-white"><img id="lizzyArt2" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreiegynqpo2t7matj5r2myjjhnoqhk6njpwaheyoo5x32loubt5yeey" class="w-full h-48 object-cover"></div>
+            <div class="rounded-xl overflow-hidden shadow-md border bg-white"><img id="lizzyArt3" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreieafmso3lzhpearewyiwumdgv5eayzk5mtkliz5gkjc5oep5n5tn4" class="w-full h-48 object-cover"></div>
         </div>
     </div>
-</div>
-        
-        <!-- Art Gallery -->
-        <div class="my-16">
-            <div class="text-center mb-6"><h3 class="text-2xl font-bold text-[#442A1D]">Lizzy Art Gallery</h3><div class="gradient-underline my-2"></div><p class="text-sm text-gray-500 mt-1">Ion Play Small</p></div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-5">
-                <div class="rounded-xl overflow-hidden shadow-md border bg-white"><img id="lizzyArt1" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreigyahzl7chl7zanad3puau2cm57xle3xxuvxnxrovds6iecg6cqhq" class="w-full h-48 object-cover"></div>
-                <div class="rounded-xl overflow-hidden shadow-md border bg-white"><img id="lizzyArt2" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreiegynqpo2t7matj5r2myjjhnoqhk6njpwaheyoo5x32loubt5yeey" class="w-full h-48 object-cover"></div>
-                <div class="rounded-xl overflow-hidden shadow-md border bg-white"><img id="lizzyArt3" src="https://chocolate-solid-skunk-453.mypinata.cloud/ipfs/bafkreieafmso3lzhpearewyiwumdgv5eayzk5mtkliz5gkjc5oep5n5tn4" class="w-full h-48 object-cover"></div>
-            </div>
-        </div>
-    </main>
+</main>
 
-    <footer class="footer-lizzy py-8 text-center text-sm">
-        <p>$LIZZY — The Oracle of Solana. Zero sell pressure, pure conviction.</p>
-        <p class="mt-1 opacity-70 text-xs">Lizzy holds his bag forever. Launch: May 7, 8PM EST.</p>
-    </footer>
+<footer class="footer-lizzy py-8 text-center text-sm">
+    <p>$LIZZY — The Oracle of Solana. Zero sell pressure, pure conviction.</p>
+    <p class="mt-1 opacity-70 text-xs">Lizzy holds his bag forever. Launch: May 7, 8PM EST.</p>
+</footer>
 
-    <script>
-        // CONFIGURATION
-        const DEV_WALLET = "BLKj7mTgRa9Fg1vCDqZeNaBSjyekF4xpK72fMWikZYmq";
-        const HARD_CAP = 3000;
-        const REF_BONUS = 0.05;
-        const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
-        
-        let totalRaised = 892;
-        let buyerCount = 534;
-        let recentPurchases = [];
-        let publicKey = null, connection = null, wallet = null, currentBalance = 0;
-        
-        // Generate random wallet endings
-        function randomWalletEnding() {
-            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
+<script>
+    const DEV_WALLET = "BLKj7mTgRa9Fg1vCDqZeNaBSjyekF4xpK72fMWikZYmq";
+    const HARD_CAP = 3000;
+    const REF_BONUS = 0.05;
+    const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
+    
+    let totalRaised = 892, buyerCount = 534, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
+    
+    function randomWalletEnding() {
+        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for(let i = 0; i < 4; i++) result += chars[Math.floor(Math.random() * chars.length)];
+        return result;
+    }
+    
+    function getCurrentTier() { for(let i=TIERS.length-1; i>=0; i--) if(totalRaised >= TIERS[i].raised) return TIERS[i]; return TIERS[0]; }
+    
+    function updateTokenUI() {
+        let amt = parseFloat(document.getElementById('solAmountInput').value) || 0;
+        let tier = getCurrentTier();
+        let base = Math.floor(amt * tier.tokensPerSol);
+        let hasRef = document.getElementById('referralCodeInput').value.trim().length > 0;
+        let bonus = hasRef ? Math.floor(base * REF_BONUS) : 0;
+        document.getElementById('baseTokenPreviewVal').innerText = base.toLocaleString();
+        if(hasRef && bonus > 0) {
+            document.getElementById('bonusPreviewRow').classList.remove('hidden');
+            document.getElementById('bonusTokenVal').innerText = `+${bonus.toLocaleString()}`;
+        } else {
+            document.getElementById('bonusPreviewRow').classList.add('hidden');
+        }
+        document.getElementById('totalTokenFinal').innerText = (base + bonus).toLocaleString();
+        document.getElementById('pricePerSolDisplay').innerText = (tier.tokensPerSol/1000).toFixed(0)+'K';
+        let btn = document.getElementById('buyTokenBtn');
+        if(!publicKey) { btn.disabled=true; btn.innerText='Connect wallet to buy'; }
+        else if(amt < 0.5) { btn.disabled=true; btn.innerText='Minimum 0.5 SOL'; }
+        else if(amt > 500) { btn.disabled=true; btn.innerText='Maximum 500 SOL'; }
+        else if(currentBalance < amt) { btn.disabled=true; btn.innerText='Insufficient balance'; }
+        else { btn.disabled=false; btn.innerText='Buy $LIZZY'; }
+    }
+    
+    function updateStatsUI() {
+        let percent = (totalRaised/HARD_CAP)*100;
+        document.getElementById('totalRaisedDisplay').innerHTML = totalRaised.toFixed(2)+' SOL';
+        document.getElementById('currentRaisedDisplay').innerHTML = totalRaised.toFixed(2)+' SOL';
+        document.getElementById('totalBuyersDisplay').innerText = buyerCount;
+        document.getElementById('progressPercent').innerText = percent.toFixed(1)+'%';
+        document.getElementById('progressFillBar').style.width = percent+'%';
+        updateTokenUI();
+    }
+    
+    function addRecentPurchase(amt, walletSuffix = null) {
+        let tier = getCurrentTier();
+        let tokens = Math.floor(amt * tier.tokensPerSol);
+        let suffix = walletSuffix || randomWalletEnding();
+        recentPurchases.unshift({ amount: amt.toFixed(2), tokens, wallet: `...${suffix}`, time: 'just now', isNew: true });
+        if(recentPurchases.length > 8) recentPurchases.pop();
+        renderRecentPurchases();
+        setTimeout(() => { recentPurchases.forEach(p => p.isNew = false); renderRecentPurchases(); }, 3000);
+    }
+    
+    function renderRecentPurchases() {
+        const container = document.getElementById('recentPurchasesList');
+        if(recentPurchases.length === 0) {
             for(let i = 0; i < 4; i++) {
-                result += chars[Math.floor(Math.random() * chars.length)];
-            }
-            return result;
-        }
-        
-        function getCurrentTier() { for(let i=TIERS.length-1; i>=0; i--) if(totalRaised >= TIERS[i].raised) return TIERS[i]; return TIERS[0]; }
-        
-        function updateTokenUI() {
-            let amt = parseFloat(document.getElementById('solAmountInput').value) || 0;
-            let tier = getCurrentTier();
-            let base = Math.floor(amt * tier.tokensPerSol);
-            let hasRef = document.getElementById('referralCodeInput').value.trim().length > 0;
-            let bonus = hasRef ? Math.floor(base * REF_BONUS) : 0;
-            document.getElementById('baseTokenPreviewVal').innerText = base.toLocaleString();
-            if(hasRef && bonus > 0) {
-                document.getElementById('bonusPreviewRow').classList.remove('hidden');
-                document.getElementById('bonusTokenVal').innerText = `+${bonus.toLocaleString()}`;
-            } else {
-                document.getElementById('bonusPreviewRow').classList.add('hidden');
-            }
-            document.getElementById('totalTokenFinal').innerText = (base + bonus).toLocaleString();
-            document.getElementById('pricePerSolDisplay').innerText = (tier.tokensPerSol/1000).toFixed(0)+'K';
-            let btn = document.getElementById('buyTokenBtn');
-            if(!publicKey) { btn.disabled=true; btn.innerText='Connect wallet to buy'; }
-            else if(amt < 0.5) { btn.disabled=true; btn.innerText='Minimum 0.5 SOL'; }
-            else if(amt > 500) { btn.disabled=true; btn.innerText='Maximum 500 SOL'; }
-            else if(currentBalance < amt) { btn.disabled=true; btn.innerText='Insufficient balance'; }
-            else { btn.disabled=false; btn.innerText='Buy $LIZZY'; }
-        }
-        
-        function updateStatsUI() {
-            let percent = (totalRaised/HARD_CAP)*100;
-            document.getElementById('totalRaisedDisplay').innerHTML = totalRaised.toFixed(2)+' SOL';
-            document.getElementById('totalBuyersDisplay').innerText = buyerCount;
-            document.getElementById('progressPercentText').innerText = percent.toFixed(1)+'%';
-            document.getElementById('progressFillBar').style.width = percent+'%';
-            updateTokenUI();
-        }
-        
-        function addRecentPurchase(amt, walletSuffix = null) {
-            let tier = getCurrentTier();
-            let tokens = Math.floor(amt * tier.tokensPerSol);
-            let suffix = walletSuffix || randomWalletEnding();
-            let timeAgo = 'just now';
-            recentPurchases.unshift({ amount: amt.toFixed(2), tokens, wallet: `...${suffix}`, time: timeAgo, isNew: true });
-            if(recentPurchases.length > 8) recentPurchases.pop();
-            renderRecentPurchases();
-            
-            setTimeout(() => {
-                recentPurchases.forEach(p => p.isNew = false);
-                renderRecentPurchases();
-            }, 3000);
-        }
-        
-        function renderRecentPurchases() {
-            const container = document.getElementById('recentPurchasesList');
-            if(recentPurchases.length === 0) {
-                for(let i = 0; i < 4; i++) {
-                    let fakeAmt = (Math.random() * 10 + 0.5).toFixed(1);
-                    let fakeTokens = Math.floor(parseFloat(fakeAmt) * getCurrentTier().tokensPerSol);
-                    recentPurchases.push({ amount: fakeAmt, tokens: fakeTokens, wallet: `...${randomWalletEnding()}`, time: `${i+2} min ago`, isNew: false });
-                }
-            }
-            container.innerHTML = recentPurchases.map(p => `
-                <div class="recent-item flex justify-between items-center p-2 bg-white/60 rounded-lg border-l-4 border-[#BAD668] ${p.isNew ? 'bg-[#BAD668]/20' : ''}">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-user text-[#C46B60] text-xs"></i>
-                        <span class="wallet-address text-sm">${p.wallet}</span>
-                    </div>
-                    <div class="text-right">
-                        <div class="font-bold text-sm">${p.amount} SOL</div>
-                        <div class="text-xs text-[#C46B60]">${p.tokens.toLocaleString()} LIZZY</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-        
-        // FIXED COUNTDOWN TIMER
-        function startCountdown() {
-            // Target: May 7, 2026 at 8:00 PM EST
-            // EST is UTC-5, so 8pm EST = 01:00 UTC next day
-            const targetDate = new Date('May 7, 2026 20:00:00 GMT-0500').getTime();
-            
-            console.log('Countdown target:', new Date(targetDate));
-            
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
-                
-                if(distance < 0) {
-                    document.getElementById('countdownDays').innerText = '00';
-                    document.getElementById('countdownHours').innerText = '00';
-                    document.getElementById('countdownMins').innerText = '00';
-                    document.getElementById('countdownSecs').innerText = '00';
-                    return;
-                }
-                
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                document.getElementById('countdownDays').innerText = days.toString().padStart(2, '0');
-                document.getElementById('countdownHours').innerText = hours.toString().padStart(2, '0');
-                document.getElementById('countdownMins').innerText = minutes.toString().padStart(2, '0');
-                document.getElementById('countdownSecs').innerText = seconds.toString().padStart(2, '0');
-            }
-            
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-        }
-        
-        async function fetchBalance() {
-            if(publicKey && connection) {
-                try {
-                    let bal = await connection.getBalance(new solanaWeb3.PublicKey(publicKey));
-                    currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
-                    document.getElementById('balanceDisplay').innerText = currentBalance.toFixed(4)+' SOL';
-                    updateTokenUI();
-                } catch(e) {}
+                let fakeAmt = (Math.random() * 10 + 0.5).toFixed(1);
+                let fakeTokens = Math.floor(parseFloat(fakeAmt) * getCurrentTier().tokensPerSol);
+                recentPurchases.push({ amount: fakeAmt, tokens: fakeTokens, wallet: `...${randomWalletEnding()}`, time: `${i+2} min ago`, isNew: false });
             }
         }
-        
-        async function connectWallet() {
-            if(!window.solana?.isPhantom) {
-                alert('Please install Phantom wallet from phantom.app');
-                window.open('https://phantom.app/', '_blank');
+        container.innerHTML = recentPurchases.map(p => `
+            <div class="recent-item flex justify-between items-center p-2 bg-white/60 rounded-lg border-l-4 border-[#BAD668] ${p.isNew ? 'bg-[#BAD668]/20' : ''}">
+                <div class="flex items-center gap-2"><i class="fas fa-user text-[#C46B60] text-xs"></i><span class="wallet-address text-sm">${p.wallet}</span></div>
+                <div class="text-right"><div class="font-bold text-sm">${p.amount} SOL</div><div class="text-xs text-[#C46B60]">${p.tokens.toLocaleString()} LIZZY</div></div>
+            </div>
+        `).join('');
+    }
+    
+    function startCountdown() {
+        const targetDate = new Date('May 7, 2026 20:00:00 GMT-0500').getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            if(distance < 0) {
+                ['countdownDays','countdownHours','countdownMins','countdownSecs'].forEach(id => document.getElementById(id).innerText = '00');
                 return;
             }
-            wallet = window.solana;
-            try {
-                let resp = await wallet.connect();
-                publicKey = resp.publicKey.toString();
-                document.getElementById('walletShortAddr').innerText = publicKey.slice(0,4)+'...'+publicKey.slice(-4);
-                document.getElementById('walletPromptArea').classList.add('hidden');
-                document.getElementById('walletInfoArea').classList.remove('hidden');
-                connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
-                await fetchBalance();
-                updateTokenUI();
-            } catch(e) { alert('Connection failed'); }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('countdownDays').innerText = days.toString().padStart(2, '0');
+            document.getElementById('countdownHours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('countdownMins').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('countdownSecs').innerText = seconds.toString().padStart(2, '0');
         }
-        
-        function disconnect() {
-            if(wallet) wallet.disconnect();
-            publicKey = null;
-            document.getElementById('walletPromptArea').classList.remove('hidden');
-            document.getElementById('walletInfoArea').classList.add('hidden');
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+    
+    async function fetchBalance() {
+        if(publicKey && connection) {
+            try {
+                let bal = await connection.getBalance(new solanaWeb3.PublicKey(publicKey));
+                currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
+                document.getElementById('balanceDisplay').innerText = currentBalance.toFixed(4)+' SOL';
+                updateTokenUI();
+            } catch(e) {}
+        }
+    }
+    
+    async function connectWallet() {
+        if(!window.solana?.isPhantom) {
+            alert('Please install Phantom wallet from phantom.app');
+            window.open('https://phantom.app/', '_blank');
+            return;
+        }
+        wallet = window.solana;
+        try {
+            let resp = await wallet.connect();
+            publicKey = resp.publicKey.toString();
+            document.getElementById('walletShortAddr').innerText = publicKey.slice(0,4)+'...'+publicKey.slice(-4);
+            document.getElementById('walletPromptArea').classList.add('hidden');
+            document.getElementById('walletInfoArea').classList.remove('hidden');
+            connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+            await fetchBalance();
             updateTokenUI();
-        }
-        
-        async function buyTokens() {
-            if(!publicKey) return;
-            let amount = parseFloat(document.getElementById('solAmountInput').value);
-            if(amount < 0.5 || amount > 500) return;
-            let btn = document.getElementById('buyTokenBtn');
-            btn.disabled = true;
-            btn.innerText = 'Processing...';
-            try {
-                let {blockhash} = await connection.getLatestBlockhash();
-                let tx = new solanaWeb3.Transaction().add(
-                    solanaWeb3.SystemProgram.transfer({
-                        fromPubkey: new solanaWeb3.PublicKey(publicKey),
-                        toPubkey: new solanaWeb3.PublicKey(DEV_WALLET),
-                        lamports: Math.floor(amount * solanaWeb3.LAMPORTS_PER_SOL)
-                    })
-                );
-                tx.recentBlockhash = blockhash;
-                tx.feePayer = new solanaWeb3.PublicKey(publicKey);
-                let signed = await wallet.signTransaction(tx);
-                let sig = await connection.sendRawTransaction(signed.serialize());
-                await connection.confirmTransaction(sig, 'confirmed');
-                totalRaised += amount;
-                buyerCount++;
-                updateStatsUI();
-                let walletEnding = publicKey.slice(-4);
-                addRecentPurchase(amount, walletEnding);
-                document.getElementById('transactionMessage').innerHTML = `<div class="text-green-700 bg-green-50 p-2 rounded-xl text-xs">Success! ${Math.floor(amount*getCurrentTier().tokensPerSol).toLocaleString()} LIZZY tokens reserved. <a href="https://explorer.solana.com/tx/${sig}" target="_blank" class="underline">View transaction</a></div>`;
-                setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 5000);
-                await fetchBalance();
-            } catch(err) {
-                document.getElementById('transactionMessage').innerHTML = `<div class="text-red-600 bg-red-50 p-2 rounded-xl text-xs">Failed: ${err.message.slice(0,80)}</div>`;
-                setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 4000);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = 'Buy $LIZZY';
-                updateTokenUI();
-            }
-        }
-        
-        // Simulate live activity
-        function simulateLiveActivity() {
-            setInterval(() => {
-                if(totalRaised < HARD_CAP && Math.random() > 0.65) {
-                    let fakeAmount = +(Math.random() * 2 + 0.5).toFixed(2);
-                    totalRaised = Math.min(totalRaised + fakeAmount, HARD_CAP);
-                    buyerCount += Math.random() > 0.7 ? 1 : 0;
-                    updateStatsUI();
-                    addRecentPurchase(fakeAmount, null);
-                }
-            }, 15000);
-        }
-        
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM loaded, starting countdown...');
-            startCountdown();
-            
-            document.getElementById('connectWalletNavBtn').addEventListener('click', connectWallet);
-            document.getElementById('presaleConnectBtnInline').addEventListener('click', connectWallet);
-            document.getElementById('disconnectWalletBtn').addEventListener('click', disconnect);
-            document.getElementById('buyTokenBtn').addEventListener('click', buyTokens);
-            document.getElementById('solAmountInput').addEventListener('input', updateTokenUI);
-            document.getElementById('referralCodeInput').addEventListener('input', updateTokenUI);
-            document.querySelectorAll('.quickAmountBtn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.getElementById('solAmountInput').value = btn.dataset.quick;
-                    updateTokenUI();
-                });
-            });
-            
+        } catch(e) { alert('Connection failed'); }
+    }
+    
+    function disconnect() {
+        if(wallet) wallet.disconnect();
+        publicKey = null;
+        document.getElementById('walletPromptArea').classList.remove('hidden');
+        document.getElementById('walletInfoArea').classList.add('hidden');
+        updateTokenUI();
+    }
+    
+    async function buyTokens() {
+        if(!publicKey) return;
+        let amount = parseFloat(document.getElementById('solAmountInput').value);
+        if(amount < 0.5 || amount > 500) return;
+        let btn = document.getElementById('buyTokenBtn');
+        btn.disabled = true; btn.innerText = 'Processing...';
+        try {
+            let {blockhash} = await connection.getLatestBlockhash();
+            let tx = new solanaWeb3.Transaction().add(solanaWeb3.SystemProgram.transfer({ fromPubkey: new solanaWeb3.PublicKey(publicKey), toPubkey: new solanaWeb3.PublicKey(DEV_WALLET), lamports: Math.floor(amount * solanaWeb3.LAMPORTS_PER_SOL) }));
+            tx.recentBlockhash = blockhash; tx.feePayer = new solanaWeb3.PublicKey(publicKey);
+            let signed = await wallet.signTransaction(tx);
+            let sig = await connection.sendRawTransaction(signed.serialize());
+            await connection.confirmTransaction(sig, 'confirmed');
+            totalRaised += amount; buyerCount++;
             updateStatsUI();
-            renderRecentPurchases();
-            simulateLiveActivity();
-            
-            let ctx = document.getElementById('lizzyTokenChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Presale 40%', 'Liquidity 30%', 'Marketing 15%', 'Community 10%', 'Lizzy Reserve 5%'],
-                    datasets: [{ data: [40,30,15,10,5], backgroundColor: ['#C46B60','#BAD668','#E8E8E1','#442A1D','#DC8B70'], borderWidth: 0 }]
-                },
-                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
-            });
-        });
-    </script>
+            addRecentPurchase(amount, publicKey.slice(-4));
+            document.getElementById('transactionMessage').innerHTML = `<div class="text-green-700 bg-green-50 p-2 rounded-xl text-xs">✓ Success! ${Math.floor(amount*getCurrentTier().tokensPerSol).toLocaleString()} LIZZY reserved. <a href="https://explorer.solana.com/tx/${sig}" target="_blank" class="underline">View tx</a></div>`;
+            setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 5000);
+            await fetchBalance();
+        } catch(err) {
+            document.getElementById('transactionMessage').innerHTML = `<div class="text-red-600 bg-red-50 p-2 rounded-xl text-xs">✗ ${err.message.slice(0,80)}</div>`;
+            setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 4000);
+        } finally { btn.disabled = false; btn.innerText = 'Buy $LIZZY'; updateTokenUI(); }
+    }
+    
+    function simulateLiveActivity() {
+        setInterval(() => {
+            if(totalRaised < HARD_CAP && Math.random() > 0.65) {
+                let fakeAmount = +(Math.random() * 2 + 0.5).toFixed(2);
+                totalRaised = Math.min(totalRaised + fakeAmount, HARD_CAP);
+                buyerCount += Math.random() > 0.7 ? 1 : 0;
+                updateStatsUI();
+                addRecentPurchase(fakeAmount, null);
+            }
+        }, 15000);
+    }
+    
+    function setupMobileWalletButtons() {
+        document.getElementById('openInPhantomBtn')?.addEventListener('click', () => { window.location.href = 'https://phantom.app/ul/browse/' + encodeURIComponent(window.location.href); });
+        document.getElementById('installPhantomBtn')?.addEventListener('click', () => { window.open('https://phantom.app/download', '_blank'); });
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        startCountdown();
+        setupMobileWalletButtons();
+        document.getElementById('connectWalletNavBtn').addEventListener('click', connectWallet);
+        document.getElementById('presaleConnectBtnInline').addEventListener('click', connectWallet);
+        document.getElementById('disconnectWalletBtn').addEventListener('click', disconnect);
+        document.getElementById('buyTokenBtn').addEventListener('click', buyTokens);
+        document.getElementById('solAmountInput').addEventListener('input', updateTokenUI);
+        document.getElementById('referralCodeInput').addEventListener('input', updateTokenUI);
+        document.querySelectorAll('.quickAmountBtn').forEach(btn => { btn.addEventListener('click', () => { document.getElementById('solAmountInput').value = btn.dataset.quick; updateTokenUI(); }); });
+        updateStatsUI();
+        renderRecentPurchases();
+        simulateLiveActivity();
+        let ctx = document.getElementById('lizzyTokenChart').getContext('2d');
+        new Chart(ctx, { type: 'doughnut', data: { labels: ['Presale 40%', 'Liquidity 30%', 'Marketing 15%', 'Community 10%', 'Lizzy Reserve 5%'], datasets: [{ data: [40,30,15,10,5], backgroundColor: ['#C46B60','#BAD668','#E8E8E1','#442A1D','#DC8B70'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } } });
+    });
+</script>
 </body>
 </html>
