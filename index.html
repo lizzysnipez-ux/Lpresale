@@ -73,13 +73,6 @@
             margin: 0 auto;
         }
         
-        .stat-card {
-            background: white;
-            border-radius: 20px;
-            padding: 0.75rem;
-            border: 1px solid rgba(196, 107, 96, 0.2);
-        }
-        
         .progress-track {
             background: rgba(196, 107, 96, 0.15);
             border-radius: 40px;
@@ -278,6 +271,26 @@
         </div>
     </div>
 
+    <!-- Presale Stats - Roofy Style (Above the presale card) -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
+        <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
+            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalRaisedDisplay">892.00</div>
+            <div class="text-xs md:text-sm text-[#8B6F5C] mt-1">Total Raised (SOL)</div>
+        </div>
+        <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
+            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalBuyersDisplay">534</div>
+            <div class="text-xs md:text-sm text-[#8B6F5C] mt-1">Total Buyers</div>
+        </div>
+        <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
+            <div class="text-xl md:text-3xl font-bold text-[#C46B60]" id="pricePerSolDisplay">280K</div>
+            <div class="text-xs md:text-sm text-[#8B6F5C] mt-1">Tokens per SOL</div>
+        </div>
+        <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
+            <div class="text-xl md:text-3xl font-bold text-[#C46B60]">3,000</div>
+            <div class="text-xs md:text-sm text-[#8B6F5C] mt-1">Hard Cap (SOL)</div>
+        </div>
+    </div>
+
     <!-- Presale Card -->
     <div id="presale" class="max-w-2xl mx-auto mb-20">
         <div class="bg-white rounded-2xl md:rounded-3xl shadow-xl overflow-hidden border border-[#C46B60]/20">
@@ -289,7 +302,7 @@
                 <p class="text-sm opacity-90 mt-1">Hard Cap: 3,000 SOL • Price increases every tier</p>
                 <div class="mt-4">
                     <div class="flex justify-between text-xs mb-1"><span>Progress</span><span id="progressPercent">0%</span></div>
-                    <div class="h-2 bg-white/30 rounded-full overflow-hidden"><div id="progressFillBar" class="h-full bg-white rounded-full transition-all duration-500" style="width: 0%"></div></div>
+                    <div class="progress-track"><div id="progressFillBar" class="progress-fill" style="width: 0%"></div></div>
                     <div class="flex justify-between text-xs mt-1"><span>0 SOL</span><span id="currentRaisedDisplay">0 SOL</span><span>3,000 SOL</span></div>
                 </div>
             </div>
@@ -317,23 +330,6 @@
                         <button id="disconnectWalletBtn" class="text-xs text-[#C46B60] underline">disconnect</button>
                     </div>
                 </div>
-
-                <!-- Stats Row - Roofy Style -->
-<div class="grid grid-cols-3 gap-3 md:gap-4 mb-6">
-    <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
-        <div class="text-xs text-[#8B6F5C] mb-1">Raised</div>
-        <div class="text-lg md:text-2xl font-bold text-[#442A1D]" id="totalRaisedDisplay">892.00</div>
-        <div class="text-[10px] md:text-xs text-[#8B6F5C]">/ 3,000 SOL</div>
-    </div>
-    <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
-        <div class="text-xs text-[#8B6F5C] mb-1">Buyers</div>
-        <div class="text-lg md:text-2xl font-bold text-[#442A1D]" id="totalBuyersDisplay">534</div>
-    </div>
-    <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
-        <div class="text-xs text-[#8B6F5C] mb-1">Tokens/SOL</div>
-        <div class="text-lg md:text-2xl font-bold text-[#C46B60]" id="pricePerSolDisplay">280K</div>
-    </div>
-</div>
 
                 <!-- Amount Input -->
                 <div class="mb-5">
@@ -381,7 +377,7 @@
         </div>
     </div>
 
-    <!-- Story Section - Fixed social links (clean buttons) -->
+    <!-- Story Section -->
     <div id="story" class="grid md:grid-cols-2 gap-10 items-center my-20">
         <div>
             <span class="text-sm uppercase tracking-wider text-[#C46B60] font-semibold">The Legacy</span>
@@ -389,7 +385,6 @@
             <h2 class="text-3xl md:text-4xl font-bold text-[#442A1D] mt-2">Whiskey, Trades & Loyalty</h2>
             <p class="text-[#4D3829] mt-4 leading-relaxed">Lizzy represents more than influence — he represents alignment. A community built on shared wins, sharp execution, and real conviction. <span class="font-semibold">$LIZZY is his immortal legacy on Solana.</span> A symbol of consistency in a volatile space.</p>
             
-            <!-- Social Links - Clean button style -->
             <div class="flex flex-wrap gap-3 mt-6">
                 <a href="https://www.instagram.com/fernandolizzario" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-[#E2DDD0] hover:border-[#C46B60] hover:bg-[#C46B60]/5 transition text-sm font-medium social-link">
                     <i class="fab fa-instagram text-[#C46B60]"></i>
@@ -413,7 +408,7 @@
         </div>
     </div>
 
-    <!-- Tokenomics with smaller pie chart -->
+    <!-- Tokenomics -->
     <div id="tokenomics" class="card-elegant p-6 md:p-8 my-20">
         <div class="text-center mb-6"><h3 class="text-2xl font-bold text-[#442A1D]">Tokenomics · 1B $LIZZY</h3><div class="gradient-underline my-2"></div></div>
         <div class="grid md:grid-cols-2 gap-8 items-center">
@@ -544,7 +539,7 @@
     
     function updateStatsUI() {
         let percent = (totalRaised/HARD_CAP)*100;
-        document.getElementById('totalRaisedDisplay').innerHTML = totalRaised.toFixed(2)+' SOL';
+        document.getElementById('totalRaisedDisplay').innerHTML = totalRaised.toFixed(2);
         document.getElementById('currentRaisedDisplay').innerHTML = totalRaised.toFixed(2)+' SOL';
         document.getElementById('totalBuyersDisplay').innerText = buyerCount;
         document.getElementById('progressPercent').innerText = percent.toFixed(1)+'%';
