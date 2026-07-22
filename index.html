@@ -65,6 +65,12 @@
             transform: translateY(-1px);
         }
         
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         .gradient-underline {
             background: linear-gradient(120deg, var(--terracotta), var(--soft-green));
             height: 3px;
@@ -214,6 +220,31 @@
         .wallet-address { font-family: 'Courier New', monospace; font-size: 0.7rem; letter-spacing: 0.5px; }
         .chart-container { max-width: 280px; margin: 0 auto; }
         @media (max-width: 768px) { .chart-container { max-width: 220px; } }
+
+        /* Balance refresh button */
+        .refresh-balance-btn {
+            background: none;
+            border: none;
+            color: var(--terracotta);
+            font-size: 0.9rem;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: background 0.2s;
+            cursor: pointer;
+            margin-left: 4px;
+        }
+        .refresh-balance-btn:hover {
+            background: rgba(196, 107, 96, 0.15);
+        }
+        .refresh-balance-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .balance-error {
+            color: #c46b60;
+            font-size: 0.7rem;
+            margin-left: 4px;
+        }
     </style>
 </head>
 <body>
@@ -271,7 +302,7 @@
         </div>
     </div>
 
-    <!-- Presale Stats - Roofy Style (Above the presale card) -->
+    <!-- Presale Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
         <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
             <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalRaisedDisplay">2439.00</div>
@@ -325,8 +356,17 @@
                 
                 <div id="walletInfoArea" class="hidden mb-5 p-3 bg-[#F1F5E8] rounded-xl border border-[#BAD668]/40">
                     <div class="flex justify-between items-center flex-wrap gap-2">
-                        <div class="flex items-center gap-1"><i class="fas fa-circle text-[#BAD668] text-[10px]"></i><span id="walletShortAddr" class="wallet-address text-xs md:text-sm">xxxxx</span></div>
-                        <div class="font-medium text-sm"><i class="fas fa-coins text-[#C46B60] mr-1"></i><span id="balanceDisplay">0.00 SOL</span></div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-circle text-[#BAD668] text-[10px]"></i>
+                            <span id="walletShortAddr" class="wallet-address text-xs md:text-sm">xxxxx</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <span class="font-medium text-sm"><i class="fas fa-coins text-[#C46B60] mr-1"></i><span id="balanceDisplay">0.0000 SOL</span></span>
+                            <button id="refreshBalanceBtn" class="refresh-balance-btn" title="Refresh balance">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <span id="balanceErrorMsg" class="balance-error hidden"></span>
+                        </div>
                         <button id="disconnectWalletBtn" class="text-xs text-[#C46B60] underline">disconnect</button>
                     </div>
                 </div>
@@ -504,7 +544,9 @@
     const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
     
     let totalRaised = 2439, buyerCount = 3243, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
-    
+    let isFetchingBalance = false;
+
+    // --- Helper functions (unchanged) ---
     function randomWalletEnding() {
         const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
@@ -597,46 +639,77 @@
     }
 
     // ================================================================
-    //  REPLACED fetchBalance – now tries multiple RPC endpoints
+    //  ENHANCED fetchBalance with YOUR private Helius RPC at the top
     // ================================================================
     async function fetchBalance() {
         if (!publicKey) return;
+        if (isFetchingBalance) return;
+        isFetchingBalance = true;
 
-        // List of reliable public RPCs (including the original one)
+        const balanceDisplay = document.getElementById('balanceDisplay');
+        const balanceErrorMsg = document.getElementById('balanceErrorMsg');
+        const refreshBtn = document.getElementById('refreshBalanceBtn');
+
+        // Show loading spinner
+        balanceDisplay.innerHTML = '<span class="balance-loading">⟳</span> 0.0000 SOL';
+        balanceErrorMsg.classList.add('hidden');
+        refreshBtn.disabled = true;
+
+        // ===== YOUR PRIVATE RPC IS THE FIRST ONE =====
         const rpcList = [
+            'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1',  // Your Helius RPC
             'https://api.mainnet-beta.solana.com',
             'https://solana-api.projectserum.com',
             'https://rpc.ankr.com/solana',
-            'https://solana.publicnode.com'
+            'https://solana.publicnode.com',
+            'https://api.triton.one/rpc',
+            'https://solana-mainnet.g.alchemy.com/v2/demo',
+            'https://solana.udivine.com',
+            'https://rpc.genesis.xyz'
         ];
 
         let lastError = null;
+        let success = false;
+
         for (const rpcUrl of rpcList) {
             try {
+                console.log(`🔄 Trying RPC: ${rpcUrl}`);
                 const tempConnection = new solanaWeb3.Connection(rpcUrl, 'confirmed');
-                const bal = await tempConnection.getBalance(new solanaWeb3.PublicKey(publicKey));
+                // Race with a timeout (5 seconds)
+                const bal = await Promise.race([
+                    tempConnection.getBalance(new solanaWeb3.PublicKey(publicKey)),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+                ]);
                 currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
-                document.getElementById('balanceDisplay').innerText = currentBalance.toFixed(4) + ' SOL';
-                // Save the working connection for later use (e.g., buying)
+                balanceDisplay.innerText = currentBalance.toFixed(4) + ' SOL';
+                // Store the working connection
                 connection = tempConnection;
-                updateTokenUI();
-                return; // success
+                balanceErrorMsg.classList.add('hidden');
+                console.log(`✅ Balance ${currentBalance.toFixed(4)} SOL via ${rpcUrl}`);
+                success = true;
+                break;
             } catch (e) {
                 lastError = e;
-                console.warn(`RPC ${rpcUrl} failed:`, e.message);
+                console.warn(`❌ RPC ${rpcUrl} failed:`, e.message);
                 // continue to next
             }
         }
 
-        // All RPCs failed
-        console.error('All RPCs failed:', lastError);
-        document.getElementById('balanceDisplay').innerText = '⚠️ Balance error';
-        currentBalance = 0;
+        if (!success) {
+            console.error('All RPCs failed:', lastError);
+            balanceDisplay.innerText = '⚠️ Error';
+            balanceErrorMsg.innerText = 'Balance fetch failed. Tap ↻ to retry.';
+            balanceErrorMsg.classList.remove('hidden');
+            currentBalance = 0;
+        }
+
+        isFetchingBalance = false;
+        refreshBtn.disabled = false;
         updateTokenUI();
     }
 
     // ================================================================
-    //  REPLACED connectWallet – now calls fetchBalance (which sets connection)
+    //  connectWallet – now calls fetchBalance
     // ================================================================
     async function connectWallet() {
         if(!window.solana?.isPhantom) {
@@ -651,17 +724,22 @@
             document.getElementById('walletShortAddr').innerText = publicKey.slice(0,4)+'...'+publicKey.slice(-4);
             document.getElementById('walletPromptArea').classList.add('hidden');
             document.getElementById('walletInfoArea').classList.remove('hidden');
-            // fetchBalance will now try all RPCs and set 'connection'
             await fetchBalance();
             updateTokenUI();
-        } catch(e) { alert('Connection failed: ' + e.message); }
+        } catch(e) {
+            alert('Connection failed: ' + e.message);
+        }
     }
     
     function disconnect() {
         if(wallet) wallet.disconnect();
         publicKey = null;
+        connection = null;
+        currentBalance = 0;
         document.getElementById('walletPromptArea').classList.remove('hidden');
         document.getElementById('walletInfoArea').classList.add('hidden');
+        document.getElementById('balanceDisplay').innerText = '0.0000 SOL';
+        document.getElementById('balanceErrorMsg').classList.add('hidden');
         updateTokenUI();
     }
     
@@ -706,7 +784,10 @@
         document.getElementById('openInPhantomBtn')?.addEventListener('click', () => { window.location.href = 'https://phantom.app/ul/browse/' + encodeURIComponent(window.location.href); });
         document.getElementById('installPhantomBtn')?.addEventListener('click', () => { window.open('https://phantom.app/download', '_blank'); });
     }
-    
+
+    // ================================================================
+    //  DOM ready
+    // ================================================================
     document.addEventListener('DOMContentLoaded', () => {
         startCountdown();
         setupMobileWalletButtons();
@@ -717,11 +798,38 @@
         document.getElementById('solAmountInput').addEventListener('input', updateTokenUI);
         document.getElementById('referralCodeInput').addEventListener('input', updateTokenUI);
         document.querySelectorAll('.quickAmountBtn').forEach(btn => { btn.addEventListener('click', () => { document.getElementById('solAmountInput').value = btn.dataset.quick; updateTokenUI(); }); });
+
+        // Manual refresh button
+        document.getElementById('refreshBalanceBtn').addEventListener('click', () => {
+            if (publicKey) {
+                fetchBalance();
+            }
+        });
+
         updateStatsUI();
         renderRecentPurchases();
         simulateLiveActivity();
+
         let ctx = document.getElementById('lizzyTokenChart').getContext('2d');
         new Chart(ctx, { type: 'doughnut', data: { labels: ['Presale 40%', 'Liquidity 30%', 'Marketing 15%', 'Community 10%', 'Lizzy Reserve 5%'], datasets: [{ data: [40,30,15,10,5], backgroundColor: ['#C46B60','#BAD668','#E8E8E1','#442A1D','#DC8B70'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } } });
+
+        // Auto-connect if already connected
+        if (window.solana && window.solana.isConnected) {
+            (async () => {
+                try {
+                    const resp = await window.solana.connect({ onlyIfTrusted: true });
+                    publicKey = resp.publicKey.toString();
+                    wallet = window.solana;
+                    document.getElementById('walletShortAddr').innerText = publicKey.slice(0,4)+'...'+publicKey.slice(-4);
+                    document.getElementById('walletPromptArea').classList.add('hidden');
+                    document.getElementById('walletInfoArea').classList.remove('hidden');
+                    await fetchBalance();
+                    updateTokenUI();
+                } catch(e) {
+                    console.log('Auto-connect skipped:', e.message);
+                }
+            })();
+        }
     });
 </script>
 </body>
