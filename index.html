@@ -620,7 +620,7 @@
             document.getElementById('walletShortAddr').innerText = publicKey.slice(0,4)+'...'+publicKey.slice(-4);
             document.getElementById('walletPromptArea').classList.add('hidden');
             document.getElementById('walletInfoArea').classList.remove('hidden');
-            connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+            connection = new solanaWeb3.Connection('https://solana-api.projectserum.com', 'confirmed');
             await fetchBalance();
             updateTokenUI();
         } catch(e) { alert('Connection failed'); }
