@@ -595,18 +595,49 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
     }
-    
+
+    // ================================================================
+    //  REPLACED fetchBalance – now tries multiple RPC endpoints
+    // ================================================================
     async function fetchBalance() {
-        if(publicKey && connection) {
+        if (!publicKey) return;
+
+        // List of reliable public RPCs (including the original one)
+        const rpcList = [
+            'https://api.mainnet-beta.solana.com',
+            'https://solana-api.projectserum.com',
+            'https://rpc.ankr.com/solana',
+            'https://solana.publicnode.com'
+        ];
+
+        let lastError = null;
+        for (const rpcUrl of rpcList) {
             try {
-                let bal = await connection.getBalance(new solanaWeb3.PublicKey(publicKey));
+                const tempConnection = new solanaWeb3.Connection(rpcUrl, 'confirmed');
+                const bal = await tempConnection.getBalance(new solanaWeb3.PublicKey(publicKey));
                 currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
-                document.getElementById('balanceDisplay').innerText = currentBalance.toFixed(4)+' SOL';
+                document.getElementById('balanceDisplay').innerText = currentBalance.toFixed(4) + ' SOL';
+                // Save the working connection for later use (e.g., buying)
+                connection = tempConnection;
                 updateTokenUI();
-            } catch(e) {}
+                return; // success
+            } catch (e) {
+                lastError = e;
+                console.warn(`RPC ${rpcUrl} failed:`, e.message);
+                // continue to next
+            }
         }
+
+        // All RPCs failed
+        console.error('All RPCs failed:', lastError);
+        document.getElementById('balanceDisplay').innerText = '⚠️ Balance error';
+        currentBalance = 0;
+        updateTokenUI();
     }
-    
+
+    // ================================================================
+    //  REPLACED connectWallet – now calls fetchBalance (which sets connection)
+    // ================================================================
     async function connectWallet() {
         if(!window.solana?.isPhantom) {
             alert('Please install Phantom wallet from phantom.app');
@@ -620,10 +651,10 @@
             document.getElementById('walletShortAddr').innerText = publicKey.slice(0,4)+'...'+publicKey.slice(-4);
             document.getElementById('walletPromptArea').classList.add('hidden');
             document.getElementById('walletInfoArea').classList.remove('hidden');
-            connection = new solanaWeb3.Connection('https://solana-api.projectserum.com', 'confirmed');
+            // fetchBalance will now try all RPCs and set 'connection'
             await fetchBalance();
             updateTokenUI();
-        } catch(e) { alert('Connection failed'); }
+        } catch(e) { alert('Connection failed: ' + e.message); }
     }
     
     function disconnect() {
