@@ -16,9 +16,9 @@
             --deep-umber: #442A1D;
             --whiskey-glow: #D49A6A;
         }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             background: var(--bg-cream);
             background-image: radial-gradient(circle at 15% 25%, rgba(186, 214, 104, 0.06) 0%, rgba(196, 107, 96, 0.02) 90%);
@@ -27,50 +27,37 @@
             line-height: 1.5;
             min-height: 100vh;
         }
-        
+
         button, input { min-height: 44px; cursor: pointer; }
-        
-        .phantom-deep-link {
-            display: inline-block;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #AB9FF2 0%, #7B61FF 100%);
-            color: white;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            margin: 10px 0;
-            width: 100%;
-            text-align: center;
-        }
-        
+
         .lizzy-gradient-bg {
             background: linear-gradient(135deg, var(--terracotta) 0%, #A85546 100%);
         }
-        
+
         .card-elegant {
             background: #FFFFFF;
             border-radius: 28px;
             box-shadow: 0 20px 35px -12px rgba(68, 42, 29, 0.1);
             border: 1px solid rgba(186, 214, 104, 0.3);
         }
-        
+
         .btn-primary {
             background: var(--deep-umber);
             color: white;
             transition: all 0.2s;
         }
-        
+
         .btn-primary:hover {
             background: #5a3824;
             transform: translateY(-1px);
         }
-        
+
         .btn-primary:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
-        
+
         .gradient-underline {
             background: linear-gradient(120deg, var(--terracotta), var(--soft-green));
             height: 3px;
@@ -78,13 +65,13 @@
             border-radius: 4px;
             margin: 0 auto;
         }
-        
+
         .progress-track {
             background: rgba(196, 107, 96, 0.15);
             border-radius: 40px;
             overflow: hidden;
         }
-        
+
         .progress-fill {
             background: var(--soft-green);
             height: 6px;
@@ -92,7 +79,7 @@
             width: 0%;
             transition: width 0.6s cubic-bezier(0.22, 0.97, 0.36, 1);
         }
-        
+
         .countdown-box {
             background: rgba(68,42,29,0.06);
             backdrop-filter: blur(4px);
@@ -102,32 +89,32 @@
             text-align: center;
             border: 1px solid rgba(196,107,96,0.3);
         }
-        
+
         .countdown-value {
             font-size: 1.8rem;
             font-weight: 800;
             line-height: 1;
             color: var(--deep-umber);
         }
-        
+
         @media (max-width: 640px) {
             .countdown-value { font-size: 1.2rem; }
             .countdown-box { min-width: 55px; padding: 0.5rem 0.2rem; }
         }
-        
+
         /* Roadmap */
         .roadmap-container {
             max-width: 900px;
             margin: 0 auto;
         }
-        
+
         .roadmap-phase {
             display: flex;
             gap: 1.5rem;
             margin-bottom: 2rem;
             position: relative;
         }
-        
+
         .roadmap-timeline {
             position: relative;
             flex-shrink: 0;
@@ -136,7 +123,7 @@
             flex-direction: column;
             align-items: center;
         }
-        
+
         .roadmap-dot {
             width: 40px;
             height: 40px;
@@ -151,13 +138,13 @@
             color: var(--terracotta);
             z-index: 2;
         }
-        
+
         .roadmap-dot.active {
             background: var(--soft-green);
             border-color: var(--deep-umber);
             color: var(--deep-umber);
         }
-        
+
         .roadmap-line {
             width: 2px;
             flex: 1;
@@ -165,7 +152,7 @@
             margin-top: 6px;
             margin-bottom: 6px;
         }
-        
+
         .roadmap-card {
             flex: 1;
             background: white;
@@ -174,12 +161,12 @@
             border: 1px solid rgba(186, 214, 104, 0.4);
             transition: all 0.2s;
         }
-        
+
         .roadmap-card:hover {
             transform: translateX(4px);
             border-color: var(--terracotta);
         }
-        
+
         .phase-badge {
             display: inline-block;
             background: rgba(186, 214, 104, 0.2);
@@ -190,13 +177,13 @@
             color: var(--deep-umber);
             margin-bottom: 0.5rem;
         }
-        
+
         .phase-title {
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--deep-umber);
         }
-        
+
         @media (max-width: 768px) {
             .roadmap-phase { flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
             .roadmap-timeline { width: 100%; flex-direction: row; gap: 0.5rem; align-items: center; justify-content: flex-start; }
@@ -204,15 +191,15 @@
             .roadmap-dot { width: 32px; height: 32px; font-size: 0.85rem; }
             .phase-title { font-size: 1rem; }
         }
-        
+
         .recent-item { animation: fadeInUp 0.3s ease-out; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
+
         .whiskey-tag {
             background: linear-gradient(135deg, #D49A6A15, #C46B6008);
             border-left: 3px solid var(--whiskey-glow);
         }
-        
+
         .footer-lizzy { background: var(--deep-umber); color: #DCD6CC; }
         input:focus { border-color: var(--terracotta); outline: none; box-shadow: 0 0 0 2px rgba(196, 107, 96, 0.2); }
         .social-link { transition: all 0.2s; }
@@ -261,7 +248,7 @@
 </nav>
 
 <main class="max-w-6xl mx-auto px-5 py-8 md:py-12">
-    
+
     <!-- Hero -->
     <div class="text-center mb-14">
         <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-1.5 rounded-full border border-[#C46B60]/25 mb-5 text-sm">
@@ -339,21 +326,12 @@
             </div>
 
             <div class="p-5 md:p-7">
-                <!-- Mobile Wallet Help -->
-                <div id="mobileWalletHelp" class="mb-4 p-3 bg-blue-50 rounded-xl border border-blue-200 text-sm md:hidden">
-                    <p class="text-blue-700 font-medium"><i class="fas fa-mobile-alt mr-2"></i>Mobile users:</p>
-                    <div class="mt-2 space-y-2">
-                        <button id="openInPhantomBtn" class="phantom-deep-link w-full text-center"><i class="fas fa-external-link-alt mr-2"></i>Open in Phantom App</button>
-                        <button id="installPhantomBtn" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg text-center"><i class="fas fa-download mr-2"></i>Install Phantom</button>
-                    </div>
-                </div>
-
                 <!-- Wallet Status -->
                 <div id="walletPromptArea" class="mb-5 p-4 bg-[#F7F5EF] rounded-xl border border-[#E2DDD0] text-center">
                     <p class="text-sm text-[#735F4E]"><i class="fas fa-link mr-1 text-[#C46B60]"></i> Connect wallet to participate</p>
                     <button id="presaleConnectBtnInline" class="btn-primary w-full mt-3 py-3 rounded-xl text-sm font-medium">Connect Phantom / Solflare</button>
                 </div>
-                
+
                 <div id="walletInfoArea" class="hidden mb-5 p-3 bg-[#F1F5E8] rounded-xl border border-[#BAD668]/40">
                     <div class="flex justify-between items-center flex-wrap gap-2">
                         <div class="flex items-center gap-1">
@@ -424,7 +402,7 @@
             <div class="gradient-underline my-2 ml-0"></div>
             <h2 class="text-3xl md:text-4xl font-bold text-[#442A1D] mt-2">Whiskey, Trades & Loyalty</h2>
             <p class="text-[#4D3829] mt-4 leading-relaxed">Lizzy represents more than influence — he represents alignment. A community built on shared wins, sharp execution, and real conviction. <span class="font-semibold">$LIZZY is his immortal legacy on Solana.</span> A symbol of consistency in a volatile space.</p>
-            
+
             <div class="flex flex-wrap gap-3 mt-6">
                 <a href="https://www.instagram.com/fernandolizzario" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-[#E2DDD0] hover:border-[#C46B60] hover:bg-[#C46B60]/5 transition text-sm font-medium social-link">
                     <i class="fab fa-instagram text-[#C46B60]"></i>
@@ -470,7 +448,7 @@
             <div class="gradient-underline my-3"></div>
             <p class="text-[#5C4332] max-w-lg mx-auto">From presale ignition to market dominance</p>
         </div>
-        
+
         <div class="roadmap-container max-w-4xl mx-auto">
             <div class="roadmap-phase">
                 <div class="roadmap-timeline">
@@ -483,7 +461,7 @@
                     <p class="text-sm text-[#5C4332] mt-2">Aggressive marketing, Lizzy live alpha calls, early bonus tiers, first 1,000 holders</p>
                 </div>
             </div>
-            
+
             <div class="roadmap-phase">
                 <div class="roadmap-timeline">
                     <div class="roadmap-dot">2</div>
@@ -495,7 +473,7 @@
                     <p class="text-sm text-[#5C4332] mt-2">Official DEX launch at 8PM EST, liquidity locked 1 year, contract renounced</p>
                 </div>
             </div>
-            
+
             <div class="roadmap-phase">
                 <div class="roadmap-timeline">
                     <div class="roadmap-dot">3</div>
@@ -507,7 +485,7 @@
                     <p class="text-sm text-[#5C4332] mt-2">Gate.io, MEXC, KuCoin applications, KOL partnerships, Lizzy livestreams</p>
                 </div>
             </div>
-            
+
             <div class="roadmap-phase">
                 <div class="roadmap-timeline">
                     <div class="roadmap-dot">4</div>
@@ -520,7 +498,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Art Gallery -->
     <div class="my-16">
         <div class="text-center mb-6"><h3 class="text-2xl font-bold text-[#442A1D]">Lizzy Art Gallery</h3><div class="gradient-underline my-2"></div><p class="text-sm text-gray-500 mt-1">Ion Play Small</p></div>
@@ -542,20 +520,49 @@
     const HARD_CAP = 3000;
     const REF_BONUS = 0.05;
     const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
-    
+
     let totalRaised = 2439, buyerCount = 3243, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
     let isFetchingBalance = false;
 
-    // --- Helper functions (unchanged) ---
+    // ================================================================
+    //  MOBILE → PHANTOM AUTO-REDIRECT HELPERS
+    // ================================================================
+    function isMobileBrowser() {
+        const ua = navigator.userAgent || navigator.vendor || window.opener || '';
+        const mobile = /android|iphone|ipad|ipod|opera mini|iemobile|mobile/i.test(ua);
+        const inPhantom = !!(window.solana && window.solana.isPhantom);
+        const inSolflare = !!(window.solflare && window.solflare.isSolflare);
+        return mobile && !inPhantom && !inSolflare;
+    }
+
+    function getPhantomBrowseLink() {
+        // Phantom universal link to open this exact page inside Phantom's in-app browser
+        const url = window.location.href;
+        const ref = window.location.origin;
+        return 'https://phantom.app/ul/browse/' + encodeURIComponent(url) + '?ref=' + encodeURIComponent(ref);
+    }
+
+    function redirectToPhantomIfMobile() {
+        if (isMobileBrowser()) {
+            try { sessionStorage.setItem('lizzy_auto_connect', '1'); } catch (e) {}
+            window.location.href = getPhantomBrowseLink();
+            return true;
+        }
+        return false;
+    }
+
+    // ================================================================
+    //  HELPERS
+    // ================================================================
     function randomWalletEnding() {
         const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
         for(let i = 0; i < 4; i++) result += chars[Math.floor(Math.random() * chars.length)];
         return result;
     }
-    
+
     function getCurrentTier() { for(let i=TIERS.length-1; i>=0; i--) if(totalRaised >= TIERS[i].raised) return TIERS[i]; return TIERS[0]; }
-    
+
     function updateTokenUI() {
         let amt = parseFloat(document.getElementById('solAmountInput').value) || 0;
         let tier = getCurrentTier();
@@ -578,7 +585,7 @@
         else if(currentBalance < amt) { btn.disabled=true; btn.innerText='Insufficient balance'; }
         else { btn.disabled=false; btn.innerText='Buy $LIZZY'; }
     }
-    
+
     function updateStatsUI() {
         let percent = (totalRaised/HARD_CAP)*100;
         document.getElementById('totalRaisedDisplay').innerHTML = totalRaised.toFixed(2);
@@ -588,7 +595,7 @@
         document.getElementById('progressFillBar').style.width = percent+'%';
         updateTokenUI();
     }
-    
+
     function addRecentPurchase(amt, walletSuffix = null) {
         let tier = getCurrentTier();
         let tokens = Math.floor(amt * tier.tokensPerSol);
@@ -598,7 +605,7 @@
         renderRecentPurchases();
         setTimeout(() => { recentPurchases.forEach(p => p.isNew = false); renderRecentPurchases(); }, 3000);
     }
-    
+
     function renderRecentPurchases() {
         const container = document.getElementById('recentPurchasesList');
         if(recentPurchases.length === 0) {
@@ -615,7 +622,7 @@
             </div>
         `).join('');
     }
-    
+
     function startCountdown() {
         const targetDate = new Date('September 30, 2026 20:00:00 GMT-0500').getTime();
         function updateCountdown() {
@@ -639,7 +646,7 @@
     }
 
     // ================================================================
-    //  ENHANCED fetchBalance with YOUR private Helius RPC at the top
+    //  BALANCE FETCH (multi-RPC fallback)
     // ================================================================
     async function fetchBalance() {
         if (!publicKey) return;
@@ -650,14 +657,12 @@
         const balanceErrorMsg = document.getElementById('balanceErrorMsg');
         const refreshBtn = document.getElementById('refreshBalanceBtn');
 
-        // Show loading spinner
         balanceDisplay.innerHTML = '<span class="balance-loading">⟳</span> 0.0000 SOL';
         balanceErrorMsg.classList.add('hidden');
         refreshBtn.disabled = true;
 
-        // ===== YOUR PRIVATE RPC IS THE FIRST ONE =====
         const rpcList = [
-            'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1',  // Your Helius RPC
+            'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1',
             'https://api.mainnet-beta.solana.com',
             'https://solana-api.projectserum.com',
             'https://rpc.ankr.com/solana',
@@ -675,14 +680,12 @@
             try {
                 console.log(`🔄 Trying RPC: ${rpcUrl}`);
                 const tempConnection = new solanaWeb3.Connection(rpcUrl, 'confirmed');
-                // Race with a timeout (5 seconds)
                 const bal = await Promise.race([
                     tempConnection.getBalance(new solanaWeb3.PublicKey(publicKey)),
                     new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
                 ]);
                 currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
                 balanceDisplay.innerText = currentBalance.toFixed(4) + ' SOL';
-                // Store the working connection
                 connection = tempConnection;
                 balanceErrorMsg.classList.add('hidden');
                 console.log(`✅ Balance ${currentBalance.toFixed(4)} SOL via ${rpcUrl}`);
@@ -691,7 +694,6 @@
             } catch (e) {
                 lastError = e;
                 console.warn(`❌ RPC ${rpcUrl} failed:`, e.message);
-                // continue to next
             }
         }
 
@@ -709,12 +711,16 @@
     }
 
     // ================================================================
-    //  connectWallet – now calls fetchBalance
+    //  CONNECT WALLET  (with mobile auto-redirect)
     // ================================================================
     async function connectWallet() {
+        // Mobile user in a normal browser → bounce into Phantom in-app browser
+        if (redirectToPhantomIfMobile()) return;
+
         if(!window.solana?.isPhantom) {
-            alert('Please install Phantom wallet from phantom.app');
-            window.open('https://phantom.app/', '_blank');
+            if (confirm('Phantom wallet not detected. Open phantom.app to install it?')) {
+                window.open('https://phantom.app/', '_blank');
+            }
             return;
         }
         wallet = window.solana;
@@ -730,7 +736,7 @@
             alert('Connection failed: ' + e.message);
         }
     }
-    
+
     function disconnect() {
         if(wallet) wallet.disconnect();
         publicKey = null;
@@ -742,8 +748,14 @@
         document.getElementById('balanceErrorMsg').classList.add('hidden');
         updateTokenUI();
     }
-    
+
+    // ================================================================
+    //  BUY TOKENS  (with mobile auto-redirect)
+    // ================================================================
     async function buyTokens() {
+        // Mobile user in a normal browser → bounce into Phantom in-app browser
+        if (redirectToPhantomIfMobile()) return;
+
         if(!publicKey) return;
         let amount = parseFloat(document.getElementById('solAmountInput').value);
         if(amount < 0.5 || amount > 500) return;
@@ -767,7 +779,7 @@
             setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 4000);
         } finally { btn.disabled = false; btn.innerText = 'Buy $LIZZY'; updateTokenUI(); }
     }
-    
+
     function simulateLiveActivity() {
         setInterval(() => {
             if(totalRaised < HARD_CAP && Math.random() > 0.65) {
@@ -779,18 +791,13 @@
             }
         }, 15000);
     }
-    
-    function setupMobileWalletButtons() {
-        document.getElementById('openInPhantomBtn')?.addEventListener('click', () => { window.location.href = 'https://phantom.app/ul/browse/' + encodeURIComponent(window.location.href); });
-        document.getElementById('installPhantomBtn')?.addEventListener('click', () => { window.open('https://phantom.app/download', '_blank'); });
-    }
 
     // ================================================================
-    //  DOM ready
+    //  DOM READY
     // ================================================================
     document.addEventListener('DOMContentLoaded', () => {
         startCountdown();
-        setupMobileWalletButtons();
+
         document.getElementById('connectWalletNavBtn').addEventListener('click', connectWallet);
         document.getElementById('presaleConnectBtnInline').addEventListener('click', connectWallet);
         document.getElementById('disconnectWalletBtn').addEventListener('click', disconnect);
@@ -799,7 +806,6 @@
         document.getElementById('referralCodeInput').addEventListener('input', updateTokenUI);
         document.querySelectorAll('.quickAmountBtn').forEach(btn => { btn.addEventListener('click', () => { document.getElementById('solAmountInput').value = btn.dataset.quick; updateTokenUI(); }); });
 
-        // Manual refresh button
         document.getElementById('refreshBalanceBtn').addEventListener('click', () => {
             if (publicKey) {
                 fetchBalance();
@@ -813,8 +819,15 @@
         let ctx = document.getElementById('lizzyTokenChart').getContext('2d');
         new Chart(ctx, { type: 'doughnut', data: { labels: ['Presale 40%', 'Liquidity 30%', 'Marketing 15%', 'Community 10%', 'Lizzy Reserve 5%'], datasets: [{ data: [40,30,15,10,5], backgroundColor: ['#C46B60','#BAD668','#E8E8E1','#442A1D','#DC8B70'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } } });
 
-        // Auto-connect if already connected
-        if (window.solana && window.solana.isConnected) {
+        // If we just bounced the user into Phantom for the purpose of connecting, connect automatically
+        if (window.solana && window.solana.isPhantom && sessionStorage.getItem('lizzy_auto_connect') === '1') {
+            sessionStorage.removeItem('lizzy_auto_connect');
+            setTimeout(() => {
+                connectWallet();
+            }, 500);
+        }
+        // Otherwise, if Phantom is already connected (returning visit), rehydrate UI
+        else if (window.solana && window.solana.isConnected) {
             (async () => {
                 try {
                     const resp = await window.solana.connect({ onlyIfTrusted: true });
