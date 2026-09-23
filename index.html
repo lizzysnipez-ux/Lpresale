@@ -278,7 +278,7 @@
     <div class="max-w-2xl mx-auto mb-12">
         <div class="card-elegant p-5 text-center">
             <h3 class="text-lg uppercase tracking-wide text-[#C46B60] font-semibold">Market Launch</h3>
-            <div class="text-2xl font-bold text-[#442A1D] mt-1">September 30, 2026 — 8:00 PM EST</div>
+            <div class="text-2xl font-bold text-[#442A1D] mt-1">September 30, 2026  8:00 PM EST</div>
             <div class="grid grid-cols-4 gap-3 mt-5 max-w-md mx-auto">
                 <div class="countdown-box"><div class="countdown-value" id="countdownDays">00</div><div class="text-[10px] uppercase mt-1">DAYS</div></div>
                 <div class="countdown-box"><div class="countdown-value" id="countdownHours">00</div><div class="text-[10px] uppercase mt-1">HOURS</div></div>
@@ -292,11 +292,11 @@
     <!-- Presale Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
         <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
-            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalRaisedDisplay">2439.00</div>
+            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalRaisedDisplay">2639.00</div>
             <div class="text-xs md:text-sm text-[#8B6F5C] mt-1">Total Raised (SOL)</div>
         </div>
         <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
-            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalBuyersDisplay">3243</div>
+            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalBuyersDisplay">3743</div>
             <div class="text-xs md:text-sm text-[#8B6F5C] mt-1">Total Buyers</div>
         </div>
         <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
@@ -329,7 +329,7 @@
                 <!-- Wallet Status -->
                 <div id="walletPromptArea" class="mb-5 p-4 bg-[#F7F5EF] rounded-xl border border-[#E2DDD0] text-center">
                     <p class="text-sm text-[#735F4E]"><i class="fas fa-link mr-1 text-[#C46B60]"></i> Connect wallet to participate</p>
-                    <button id="presaleConnectBtnInline" class="btn-primary w-full mt-3 py-3 rounded-xl text-sm font-medium">Connect Phantom / Solflare</button>
+                    <button id="presaleConnectBtnInline" class="btn-primary w-full mt-3 py-3 rounded-xl text-sm font-medium">Connect Phantom</button>
                 </div>
 
                 <div id="walletInfoArea" class="hidden mb-5 p-3 bg-[#F1F5E8] rounded-xl border border-[#BAD668]/40">
@@ -401,10 +401,10 @@
             <span class="text-sm uppercase tracking-wider text-[#C46B60] font-semibold">The Legacy</span>
             <div class="gradient-underline my-2 ml-0"></div>
             <h2 class="text-3xl md:text-4xl font-bold text-[#442A1D] mt-2">Whiskey, Trades & Loyalty</h2>
-            <p class="text-[#4D3829] mt-4 leading-relaxed">Lizzy represents more than influence — he represents alignment. A community built on shared wins, sharp execution, and real conviction. <span class="font-semibold">$LIZZY is his immortal legacy on Solana.</span> A symbol of consistency in a volatile space.</p>
+            <p class="text-[#4D3829] mt-4 leading-relaxed">Lizzy represents more than influence he represents alignment. A community built on shared wins, sharp execution, and real conviction. <span class="font-semibold">$LIZZY is his immortal legacy on Solana.</span> A symbol of consistency in a volatile space.</p>
 
             <div class="flex flex-wrap gap-3 mt-6">
-                <a href="https://www.instagram.com/fernandolizzario" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-[#E2DDD0] hover:border-[#C46B60] hover:bg-[#C46B60]/5 transition text-sm font-medium social-link">
+                <a href="https://www.instagram.com/jlptrd" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-[#E2DDD0] hover:border-[#C46B60] hover:bg-[#C46B60]/5 transition text-sm font-medium social-link">
                     <i class="fab fa-instagram text-[#C46B60]"></i>
                     Instagram
                 </a>
@@ -511,8 +511,8 @@
 </main>
 
 <footer class="footer-lizzy py-8 text-center text-sm">
-    <p>$LIZZY — The Oracle of Solana. Zero sell pressure, pure conviction.</p>
-    <p class="mt-1 opacity-70 text-xs">Lizzy holds his bag forever. Launch: August 02, 8PM EST.</p>
+    <p>$LIZZY The Oracle of Solana. Zero sell pressure, pure conviction.</p>
+    <p class="mt-1 opacity-70 text-xs">Lizzy holds his bag forever. Launch: September 30, 8PM EST.</p>
 </footer>
 
 <script>
@@ -521,7 +521,7 @@
     const REF_BONUS = 0.05;
     const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
 
-    let totalRaised = 2439, buyerCount = 3243, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
+    let totalRaised = 2639, buyerCount = 3743, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
     let isFetchingBalance = false;
 
     // ================================================================
