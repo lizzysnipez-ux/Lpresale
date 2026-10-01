@@ -278,7 +278,7 @@
     <div class="max-w-2xl mx-auto mb-12">
         <div class="card-elegant p-5 text-center">
             <h3 class="text-lg uppercase tracking-wide text-[#C46B60] font-semibold">Market Launch</h3>
-            <div class="text-2xl font-bold text-[#442A1D] mt-1">September 30, 2026 — 8:00 PM EST</div>
+            <div class="text-2xl font-bold text-[#442A1D] mt-1">October 5, 2026 — 8:00 PM EST</div>
             <div class="grid grid-cols-4 gap-3 mt-5 max-w-md mx-auto">
                 <div class="countdown-box"><div class="countdown-value" id="countdownDays">00</div><div class="text-[10px] uppercase mt-1">DAYS</div></div>
                 <div class="countdown-box"><div class="countdown-value" id="countdownHours">00</div><div class="text-[10px] uppercase mt-1">HOURS</div></div>
@@ -292,11 +292,11 @@
     <!-- Presale Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
         <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
-            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalRaisedDisplay">24990.00</div>
+            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalRaisedDisplay">27640.00</div>
             <div class="text-xs md:text-sm text-[#8B6F5C] mt-1">Total Raised (SOL)</div>
         </div>
         <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
-            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalBuyersDisplay">23454</div>
+            <div class="text-xl md:text-3xl font-bold text-[#442A1D]" id="totalBuyersDisplay">26457</div>
             <div class="text-xs md:text-sm text-[#8B6F5C] mt-1">Total Buyers</div>
         </div>
         <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-[#C46B60]/20 text-center">
@@ -468,7 +468,7 @@
                     <div class="roadmap-line"></div>
                 </div>
                 <div class="roadmap-card">
-                    <div class="phase-badge">September 30 LAUNCH</div>
+                    <div class="phase-badge">October 5 LAUNCH</div>
                     <div class="phase-title">Raydium Listing & LP Lock</div>
                     <p class="text-sm text-[#5C4332] mt-2">Official DEX launch at 8PM EST, liquidity locked 1 year, contract renounced</p>
                 </div>
@@ -512,7 +512,7 @@
 
 <footer class="footer-lizzy py-8 text-center text-sm">
     <p>$LIZZY — The Oracle of Solana. Zero sell pressure, pure conviction.</p>
-    <p class="mt-1 opacity-70 text-xs">Lizzy holds his bag forever. Launch: September 30, 8PM EST.</p>
+    <p class="mt-1 opacity-70 text-xs">Lizzy holds his bag forever. Launch: October 5, 8PM EST.</p>
 </footer>
 
 <script>
@@ -521,7 +521,7 @@
     const REF_BONUS = 0.05;
     const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
 
-    let totalRaised = 24990, buyerCount = 23454, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
+    let totalRaised = 27640, buyerCount = 26457, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
     let isFetchingBalance = false;
 
     // ================================================================
@@ -624,7 +624,7 @@
     }
 
     function startCountdown() {
-        const targetDate = new Date('September 30, 2026 20:00:00 GMT-0500').getTime();
+        const targetDate = new Date('October 5, 2026 20:00:00 GMT-0500').getTime();
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
