@@ -6,17 +6,35 @@
     <title>Lizzy — The Oracle of Solana | Presale</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-    <!-- SINGLE, RELIABLE BUNDLE: Includes Buffer internally -->
-    <script src="https://cdn.jsdelivr.net/npm/@depay/solana-web3.js@1.98.3/dist/index.umd.js"></script>
+    <!-- 1. MANUAL BUFFER POLYFILL (MUST BE FIRST) -->
     <script>
-        // Verify the bundle loaded successfully
-        if (typeof solanaWeb3 === 'undefined') {
-            console.error('❌ CRITICAL: Solana Web3 bundle failed to load.');
-            alert('A critical library failed to load. Please check your connection and refresh.');
-        } else {
-            console.log('✅ Solana Web3 and Buffer are ready.');
+        if (typeof Buffer === "undefined") {
+            window.Buffer = {
+                from: function (input, encoding) {
+                    if (typeof input === "string") {
+                        const enc = encoding || 'utf8';
+                        if (enc === 'hex') {
+                            const matches = input.match(/.{1,2}/g) || [];
+                            return new Uint8Array(matches.map(byte => parseInt(byte, 16)));
+                        }
+                        // Fallback for utf8/other encodings
+                        const textEncoder = new TextEncoder();
+                        return textEncoder.encode(input);
+                    } else if (Array.isArray(input)) {
+                        return new Uint8Array(input);
+                    } else if (input instanceof ArrayBuffer) {
+                        return new Uint8Array(input);
+                    } else {
+                        throw new TypeError("Input type not supported for Buffer.from");
+                    }
+                }
+            };
+            console.log('✅ Manual Buffer polyfill injected');
         }
     </script>
+
+    <!-- 2. SOLANA WEB3.JS (Pinned version) -->
+    <script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
