@@ -376,8 +376,7 @@
         { raised: 2500, tokensPerSol: 140000 }
     ];
 
-    // RPC endpoints: reliable, CORS-friendly public RPC first, then your Helius keys.
-    // PublicNode is confirmed to be browser-friendly and does not return 403 like the official public RPC.
+    // RPC endpoints: reliable public first, then your Helius keys
     const RPC_LIST = [
         'https://solana-rpc.publicnode.com',
         'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1',
