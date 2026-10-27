@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Lizzy — The Oracle of Solana | Presale</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+    <script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -102,87 +102,16 @@
             .countdown-box { min-width: 55px; padding: 0.5rem 0.2rem; }
         }
 
-        /* Roadmap */
-        .roadmap-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .roadmap-phase {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .roadmap-timeline {
-            position: relative;
-            flex-shrink: 0;
-            width: 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .roadmap-dot {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border: 2px solid var(--terracotta);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--terracotta);
-            z-index: 2;
-        }
-
-        .roadmap-dot.active {
-            background: var(--soft-green);
-            border-color: var(--deep-umber);
-            color: var(--deep-umber);
-        }
-
-        .roadmap-line {
-            width: 2px;
-            flex: 1;
-            background: linear-gradient(to bottom, var(--terracotta), rgba(196,107,96,0.2));
-            margin-top: 6px;
-            margin-bottom: 6px;
-        }
-
-        .roadmap-card {
-            flex: 1;
-            background: white;
-            border-radius: 20px;
-            padding: 1rem 1.25rem;
-            border: 1px solid rgba(186, 214, 104, 0.4);
-            transition: all 0.2s;
-        }
-
-        .roadmap-card:hover {
-            transform: translateX(4px);
-            border-color: var(--terracotta);
-        }
-
-        .phase-badge {
-            display: inline-block;
-            background: rgba(186, 214, 104, 0.2);
-            padding: 0.2rem 0.7rem;
-            border-radius: 30px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--deep-umber);
-            margin-bottom: 0.5rem;
-        }
-
-        .phase-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--deep-umber);
-        }
+        .roadmap-container { max-width: 900px; margin: 0 auto; }
+        .roadmap-phase { display: flex; gap: 1.5rem; margin-bottom: 2rem; position: relative; }
+        .roadmap-timeline { position: relative; flex-shrink: 0; width: 60px; display: flex; flex-direction: column; align-items: center; }
+        .roadmap-dot { width: 40px; height: 40px; background: white; border: 2px solid var(--terracotta); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: var(--terracotta); z-index: 2; }
+        .roadmap-dot.active { background: var(--soft-green); border-color: var(--deep-umber); color: var(--deep-umber); }
+        .roadmap-line { width: 2px; flex: 1; background: linear-gradient(to bottom, var(--terracotta), rgba(196,107,96,0.2)); margin-top: 6px; margin-bottom: 6px; }
+        .roadmap-card { flex: 1; background: white; border-radius: 20px; padding: 1rem 1.25rem; border: 1px solid rgba(186, 214, 104, 0.4); transition: all 0.2s; }
+        .roadmap-card:hover { transform: translateX(4px); border-color: var(--terracotta); }
+        .phase-badge { display: inline-block; background: rgba(186, 214, 104, 0.2); padding: 0.2rem 0.7rem; border-radius: 30px; font-size: 0.65rem; font-weight: 600; color: var(--deep-umber); margin-bottom: 0.5rem; }
+        .phase-title { font-size: 1.1rem; font-weight: 700; color: var(--deep-umber); }
 
         @media (max-width: 768px) {
             .roadmap-phase { flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
@@ -195,11 +124,7 @@
         .recent-item { animation: fadeInUp 0.3s ease-out; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .whiskey-tag {
-            background: linear-gradient(135deg, #D49A6A15, #C46B6008);
-            border-left: 3px solid var(--whiskey-glow);
-        }
-
+        .whiskey-tag { background: linear-gradient(135deg, #D49A6A15, #C46B6008); border-left: 3px solid var(--whiskey-glow); }
         .footer-lizzy { background: var(--deep-umber); color: #DCD6CC; }
         input:focus { border-color: var(--terracotta); outline: none; box-shadow: 0 0 0 2px rgba(196, 107, 96, 0.2); }
         .social-link { transition: all 0.2s; }
@@ -208,30 +133,10 @@
         .chart-container { max-width: 280px; margin: 0 auto; }
         @media (max-width: 768px) { .chart-container { max-width: 220px; } }
 
-        /* Balance refresh button */
-        .refresh-balance-btn {
-            background: none;
-            border: none;
-            color: var(--terracotta);
-            font-size: 0.9rem;
-            padding: 4px 6px;
-            border-radius: 6px;
-            transition: background 0.2s;
-            cursor: pointer;
-            margin-left: 4px;
-        }
-        .refresh-balance-btn:hover {
-            background: rgba(196, 107, 96, 0.15);
-        }
-        .refresh-balance-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-        .balance-error {
-            color: #c46b60;
-            font-size: 0.7rem;
-            margin-left: 4px;
-        }
+        .refresh-balance-btn { background: none; border: none; color: var(--terracotta); font-size: 0.9rem; padding: 4px 6px; border-radius: 6px; transition: background 0.2s; cursor: pointer; margin-left: 4px; }
+        .refresh-balance-btn:hover { background: rgba(196, 107, 96, 0.15); }
+        .refresh-balance-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .balance-error { color: #c46b60; font-size: 0.7rem; margin-left: 4px; }
     </style>
 </head>
 <body>
@@ -521,8 +426,18 @@
     const REF_BONUS = 0.05;
     const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
 
+    // ===== RPC ENDPOINTS =====
+    // Primary Helius key, then backup Helius key, then public fallbacks
+    const RPC_LIST = [
+        'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1', // primary
+        'https://mainnet.helius-rpc.com/?api-key=ef6c64a9-9800-4de0-aa7c-4c4b93a26f98', // backup
+        'https://solana-rpc.publicnode.com',
+        'https://solana.drpc.org'
+    ];
+
     let totalRaised = 27640, buyerCount = 26458, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
     let isFetchingBalance = false;
+    let balanceKnown = false; // true only after a successful fetch
 
     // ================================================================
     //  MOBILE → PHANTOM AUTO-REDIRECT HELPERS
@@ -536,7 +451,6 @@
     }
 
     function getPhantomBrowseLink() {
-        // Phantom universal link to open this exact page inside Phantom's in-app browser
         const url = window.location.href;
         const ref = window.location.origin;
         return 'https://phantom.app/ul/browse/' + encodeURIComponent(url) + '?ref=' + encodeURIComponent(ref);
@@ -582,7 +496,7 @@
         if(!publicKey) { btn.disabled=true; btn.innerText='Connect wallet to buy'; }
         else if(amt < 0.5) { btn.disabled=true; btn.innerText='Minimum 0.5 SOL'; }
         else if(amt > 500) { btn.disabled=true; btn.innerText='Maximum 500 SOL'; }
-        else if(currentBalance < amt) { btn.disabled=true; btn.innerText='Insufficient balance'; }
+        else if(balanceKnown && currentBalance < amt) { btn.disabled=true; btn.innerText='Insufficient balance'; }
         else { btn.disabled=false; btn.innerText='Buy $LIZZY'; }
     }
 
@@ -646,7 +560,7 @@
     }
 
     // ================================================================
-    //  BALANCE FETCH (multi-RPC fallback)
+    //  BALANCE FETCH — primary Helius, backup Helius, then public
     // ================================================================
     async function fetchBalance() {
         if (!publicKey) return;
@@ -657,38 +571,32 @@
         const balanceErrorMsg = document.getElementById('balanceErrorMsg');
         const refreshBtn = document.getElementById('refreshBalanceBtn');
 
-        // Show loading spinner
         balanceDisplay.innerHTML = '<span class="balance-loading">⟳</span> 0.0000 SOL';
         balanceErrorMsg.classList.add('hidden');
         refreshBtn.disabled = true;
 
-        // ===== YOUR PRIVATE RPC IS THE FIRST ONE =====
-        const rpcUrl = 'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1';
-
         let lastError = null;
         let success = false;
 
-        for (const rpcUrl of rpcList) {
+        for (const rpcUrl of RPC_LIST) {
             try {
                 console.log(`🔄 Trying RPC: ${rpcUrl}`);
                 const tempConnection = new solanaWeb3.Connection(rpcUrl, 'confirmed');
-                // Race with a timeout (5 seconds)
                 const bal = await Promise.race([
                     tempConnection.getBalance(new solanaWeb3.PublicKey(publicKey)),
                     new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
                 ]);
                 currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
                 balanceDisplay.innerText = currentBalance.toFixed(4) + ' SOL';
-                // Store the working connection
-                connection = tempConnection;
+                connection = tempConnection; // working connection for buying
+                balanceKnown = true;
                 balanceErrorMsg.classList.add('hidden');
                 console.log(`✅ Balance ${currentBalance.toFixed(4)} SOL via ${rpcUrl}`);
                 success = true;
                 break;
             } catch (e) {
                 lastError = e;
-                console.warn(`❌ RPC ${rpcUrl} failed:`, e.message);
-                // continue to next
+                console.warn(`❌ RPC failed: ${rpcUrl} —`, e.message);
             }
         }
 
@@ -698,6 +606,11 @@
             balanceErrorMsg.innerText = 'Balance fetch failed. Tap ↻ to retry.';
             balanceErrorMsg.classList.remove('hidden');
             currentBalance = 0;
+            balanceKnown = false;
+            // Ensure buying still has a connection to try
+            if (!connection) {
+                connection = new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
+            }
         }
 
         isFetchingBalance = false;
@@ -706,10 +619,9 @@
     }
 
     // ================================================================
-    //  connectWallet – now calls fetchBalance
+    //  connectWallet
     // ================================================================
     async function connectWallet() {
-        // Mobile user in a normal browser → bounce into Phantom in-app browser
         if (redirectToPhantomIfMobile()) return;
 
         if(!window.solana?.isPhantom) {
@@ -722,6 +634,12 @@
         try {
             let resp = await wallet.connect();
             publicKey = resp.publicKey.toString();
+
+            // Set a default connection immediately so buying never crashes
+            if (!connection) {
+                connection = new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
+            }
+
             document.getElementById('walletShortAddr').innerText = publicKey.slice(0,4)+'...'+publicKey.slice(-4);
             document.getElementById('walletPromptArea').classList.add('hidden');
             document.getElementById('walletInfoArea').classList.remove('hidden');
@@ -737,6 +655,7 @@
         publicKey = null;
         connection = null;
         currentBalance = 0;
+        balanceKnown = false;
         document.getElementById('walletPromptArea').classList.remove('hidden');
         document.getElementById('walletInfoArea').classList.add('hidden');
         document.getElementById('balanceDisplay').innerText = '0.0000 SOL';
@@ -745,31 +664,50 @@
     }
 
     async function buyTokens() {
-        // Mobile user in a normal browser → bounce into Phantom in-app browser
         if (redirectToPhantomIfMobile()) return;
 
         if(!publicKey) return;
         let amount = parseFloat(document.getElementById('solAmountInput').value);
         if(amount < 0.5 || amount > 500) return;
+
         let btn = document.getElementById('buyTokenBtn');
         btn.disabled = true; btn.innerText = 'Processing...';
+
+        // Guarantee we have a connection
+        const conn = connection || new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
+
         try {
-            let {blockhash} = await connection.getLatestBlockhash();
-            let tx = new solanaWeb3.Transaction().add(solanaWeb3.SystemProgram.transfer({ fromPubkey: new solanaWeb3.PublicKey(publicKey), toPubkey: new solanaWeb3.PublicKey(DEV_WALLET), lamports: Math.floor(amount * solanaWeb3.LAMPORTS_PER_SOL) }));
-            tx.recentBlockhash = blockhash; tx.feePayer = new solanaWeb3.PublicKey(publicKey);
+            let {blockhash} = await conn.getLatestBlockhash();
+            let tx = new solanaWeb3.Transaction().add(
+                solanaWeb3.SystemProgram.transfer({
+                    fromPubkey: new solanaWeb3.PublicKey(publicKey),
+                    toPubkey: new solanaWeb3.PublicKey(DEV_WALLET),
+                    lamports: Math.floor(amount * solanaWeb3.LAMPORTS_PER_SOL)
+                })
+            );
+            tx.recentBlockhash = blockhash;
+            tx.feePayer = new solanaWeb3.PublicKey(publicKey);
+
             let signed = await wallet.signTransaction(tx);
-            let sig = await connection.sendRawTransaction(signed.serialize());
-            await connection.confirmTransaction(sig, 'confirmed');
+            let sig = await conn.sendRawTransaction(signed.serialize());
+            await conn.confirmTransaction(sig, 'confirmed');
+
             totalRaised += amount; buyerCount++;
             updateStatsUI();
             addRecentPurchase(amount, publicKey.slice(-4));
-            document.getElementById('transactionMessage').innerHTML = `<div class="text-green-700 bg-green-50 p-2 rounded-xl text-xs">✓ Success! ${Math.floor(amount*getCurrentTier().tokensPerSol).toLocaleString()} LIZZY reserved. <a href="https://explorer.solana.com/tx/${sig}" target="_blank" class="underline">View tx</a></div>`;
+
+            document.getElementById('transactionMessage').innerHTML =
+                `<div class="text-green-700 bg-green-50 p-2 rounded-xl text-xs">✓ Success! ${Math.floor(amount*getCurrentTier().tokensPerSol).toLocaleString()} LIZZY reserved. <a href="https://explorer.solana.com/tx/${sig}" target="_blank" class="underline">View tx</a></div>`;
             setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 5000);
+
             await fetchBalance();
         } catch(err) {
-            document.getElementById('transactionMessage').innerHTML = `<div class="text-red-600 bg-red-50 p-2 rounded-xl text-xs">✗ ${err.message.slice(0,80)}</div>`;
+            document.getElementById('transactionMessage').innerHTML =
+                `<div class="text-red-600 bg-red-50 p-2 rounded-xl text-xs">✗ ${err.message.slice(0,80)}</div>`;
             setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 4000);
-        } finally { btn.disabled = false; btn.innerText = 'Buy $LIZZY'; updateTokenUI(); }
+        } finally {
+            btn.disabled = false; btn.innerText = 'Buy $LIZZY'; updateTokenUI();
+        }
     }
 
     function simulateLiveActivity() {
@@ -795,13 +733,15 @@
         document.getElementById('buyTokenBtn').addEventListener('click', buyTokens);
         document.getElementById('solAmountInput').addEventListener('input', updateTokenUI);
         document.getElementById('referralCodeInput').addEventListener('input', updateTokenUI);
-        document.querySelectorAll('.quickAmountBtn').forEach(btn => { btn.addEventListener('click', () => { document.getElementById('solAmountInput').value = btn.dataset.quick; updateTokenUI(); }); });
+        document.querySelectorAll('.quickAmountBtn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('solAmountInput').value = btn.dataset.quick;
+                updateTokenUI();
+            });
+        });
 
-        // Manual refresh button
         document.getElementById('refreshBalanceBtn').addEventListener('click', () => {
-            if (publicKey) {
-                fetchBalance();
-            }
+            if (publicKey) fetchBalance();
         });
 
         updateStatsUI();
@@ -809,20 +749,32 @@
         simulateLiveActivity();
 
         let ctx = document.getElementById('lizzyTokenChart').getContext('2d');
-        new Chart(ctx, { type: 'doughnut', data: { labels: ['Presale 40%', 'Liquidity 30%', 'Marketing 15%', 'Community 10%', 'Lizzy Reserve 5%'], datasets: [{ data: [40,30,15,10,5], backgroundColor: ['#C46B60','#BAD668','#E8E8E1','#442A1D','#DC8B70'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } } });
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Presale 40%', 'Liquidity 30%', 'Marketing 15%', 'Community 10%', 'Lizzy Reserve 5%'],
+                datasets: [{ data: [40,30,15,10,5], backgroundColor: ['#C46B60','#BAD668','#E8E8E1','#442A1D','#DC8B70'], borderWidth: 0 }]
+            },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
+        });
 
-        // If we just bounced the user into Phantom for the purpose of connecting, connect automatically
+        // Auto-connect after mobile bounce
         if (window.solana && window.solana.isPhantom && sessionStorage.getItem('lizzy_auto_connect') === '1') {
             sessionStorage.removeItem('lizzy_auto_connect');
             setTimeout(() => { connectWallet(); }, 500);
         }
-        // Otherwise, if Phantom is already connected (returning visit), rehydrate UI
+        // Rehydrate returning Phantom session
         else if (window.solana && window.solana.isConnected) {
             (async () => {
                 try {
                     const resp = await window.solana.connect({ onlyIfTrusted: true });
                     publicKey = resp.publicKey.toString();
                     wallet = window.solana;
+
+                    if (!connection) {
+                        connection = new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
+                    }
+
                     document.getElementById('walletShortAddr').innerText = publicKey.slice(0,4)+'...'+publicKey.slice(-4);
                     document.getElementById('walletPromptArea').classList.add('hidden');
                     document.getElementById('walletInfoArea').classList.remove('hidden');
