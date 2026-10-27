@@ -421,16 +421,16 @@
 </footer>
 
 <script>
-    const DEV_WALLET = "GUns61xe7F4RDJh395rYWpXY5RhPZVsK2MmQjKmMUQTS";
+    const DEV_WALLET = "BLKj7mTgRa9Fg1vCDqZeNaBSjyekF4xpK72fMWikZYmq";
     const HARD_CAP = 30000;
     const REF_BONUS = 0.05;
+    const PRIORITY_FEE_MICRO_LAMPORTS = 100000;
     const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
 
     // ===== RPC ENDPOINTS =====
-    // Primary Helius key, backup Helius key, then public fallbacks
     const RPC_LIST = [
-        'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1', // primary
-        'https://mainnet.helius-rpc.com/?api-key=ef6c64a9-9800-4de0-aa7c-4c4b93a26f98', // backup
+        'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1',
+        'https://mainnet.helius-rpc.com/?api-key=ef6c64a9-9800-4de0-aa7c-4c4b93a26f98',
         'https://solana-rpc.publicnode.com',
         'https://solana.drpc.org'
     ];
@@ -438,6 +438,50 @@
     let totalRaised = 27640, buyerCount = 26458, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
     let isFetchingBalance = false;
     let balanceKnown = false;
+
+    // ================================================================
+    //  RPC HELPERS (mirroring your React code's retry/fallback pattern)
+    // ================================================================
+    const fetchWithRetry = async (fn, maxAttempts = 3, initialDelayMs = 800) => {
+        let delayMs = initialDelayMs;
+        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                return await fn();
+            } catch (error) {
+                const msg = error?.message || "";
+                const isTransient =
+                    msg.includes("Load failed") ||
+                    msg.includes("fetch failed") ||
+                    msg.includes("network") ||
+                    msg.includes("timeout") ||
+                    msg.includes("Failed to fetch") ||
+                    msg.includes("429") ||
+                    msg.includes("503");
+                if (!isTransient || attempt === maxAttempts) throw error;
+                console.warn(`[RPC] attempt ${attempt} failed (${msg.slice(0, 60)}), retrying in ${delayMs}ms...`);
+                await new Promise((resolve) => setTimeout(resolve, delayMs));
+                delayMs *= 2;
+            }
+        }
+    };
+
+    // Try each RPC in order until one succeeds
+    const runWithFallback = async (fn) => {
+        let lastError = null;
+        for (const rpcUrl of RPC_LIST) {
+            try {
+                const conn = new solanaWeb3.Connection(rpcUrl, 'confirmed');
+                const result = await fetchWithRetry(() => fn(conn));
+                // Remember the working connection
+                if (!connection) connection = conn;
+                return result;
+            } catch (e) {
+                lastError = e;
+                console.warn(`[RPC] ${rpcUrl} failed:`, e.message);
+            }
+        }
+        throw lastError;
+    };
 
     // ================================================================
     //  MOBILE → PHANTOM AUTO-REDIRECT HELPERS
@@ -560,7 +604,7 @@
     }
 
     // ================================================================
-    //  BALANCE FETCH — primary Helius, backup Helius, then public
+    //  BALANCE FETCH — retry + fallback across all RPCs
     // ================================================================
     async function fetchBalance() {
         if (!publicKey) return;
@@ -575,46 +619,27 @@
         balanceErrorMsg.classList.add('hidden');
         refreshBtn.disabled = true;
 
-        let lastError = null;
-        let success = false;
-
-        for (const rpcUrl of RPC_LIST) {
-            try {
-                console.log(`🔄 Trying RPC: ${rpcUrl}`);
-                const tempConnection = new solanaWeb3.Connection(rpcUrl, 'confirmed');
-                const bal = await Promise.race([
-                    tempConnection.getBalance(new solanaWeb3.PublicKey(publicKey)),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
-                ]);
-                currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
-                balanceDisplay.innerText = currentBalance.toFixed(4) + ' SOL';
-                connection = tempConnection;
-                balanceKnown = true;
-                balanceErrorMsg.classList.add('hidden');
-                console.log(`✅ Balance ${currentBalance.toFixed(4)} SOL via ${rpcUrl}`);
-                success = true;
-                break;
-            } catch (e) {
-                lastError = e;
-                console.warn(`❌ RPC failed: ${rpcUrl} —`, e.message);
-            }
-        }
-
-        if (!success) {
-            console.error('All RPCs failed:', lastError);
+        try {
+            const bal = await runWithFallback((conn) =>
+                conn.getBalance(new solanaWeb3.PublicKey(publicKey))
+            );
+            currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
+            balanceDisplay.innerText = currentBalance.toFixed(4) + ' SOL';
+            balanceKnown = true;
+            balanceErrorMsg.classList.add('hidden');
+            console.log(`✅ Balance ${currentBalance.toFixed(4)} SOL`);
+        } catch (e) {
+            console.error('Balance fetch failed on all RPCs:', e);
             balanceDisplay.innerText = '⚠️ Error';
             balanceErrorMsg.innerText = 'Balance fetch failed. Tap ↻ to retry.';
             balanceErrorMsg.classList.remove('hidden');
             currentBalance = 0;
             balanceKnown = false;
-            if (!connection) {
-                connection = new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
-            }
+        } finally {
+            isFetchingBalance = false;
+            refreshBtn.disabled = false;
+            updateTokenUI();
         }
-
-        isFetchingBalance = false;
-        refreshBtn.disabled = false;
-        updateTokenUI();
     }
 
     // ================================================================
@@ -662,7 +687,8 @@
     }
 
     // ================================================================
-    //  buyTokens — uses signAndSendTransaction (Phantom-recommended)
+    //  buyTokens — signAndSendTransaction + priority fee + retry fallback
+    //  Mirrors the pattern that makes your React app reliable.
     // ================================================================
     async function buyTokens() {
         if (redirectToPhantomIfMobile()) return;
@@ -674,38 +700,67 @@
         let btn = document.getElementById('buyTokenBtn');
         btn.disabled = true; btn.innerText = 'Processing...';
 
-        const conn = connection || new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
+        const msgBox = document.getElementById('transactionMessage');
 
         try {
-            let tx = new solanaWeb3.Transaction().add(
+            // 1. Fetch blockhash with retry/fallback
+            const { blockhash, lastValidBlockHeight } = await runWithFallback((conn) =>
+                conn.getLatestBlockhash('confirmed')
+            );
+
+            // 2. Build transaction with priority fee + transfer
+            const tx = new solanaWeb3.Transaction({
+                recentBlockhash: blockhash,
+                feePayer: new solanaWeb3.PublicKey(publicKey)
+            });
+
+            tx.add(
+                solanaWeb3.ComputeBudgetProgram.setComputeUnitPrice({
+                    microLamports: PRIORITY_FEE_MICRO_LAMPORTS
+                })
+            );
+
+            tx.add(
                 solanaWeb3.SystemProgram.transfer({
                     fromPubkey: new solanaWeb3.PublicKey(publicKey),
                     toPubkey: new solanaWeb3.PublicKey(DEV_WALLET),
                     lamports: Math.floor(amount * solanaWeb3.LAMPORTS_PER_SOL)
                 })
             );
-            tx.feePayer = new solanaWeb3.PublicKey(publicKey);
 
-            // Phantom-recommended: handles blockhash + broadcasting internally
+            // 3. Hand it to Phantom — it simulates + submits internally
             const { signature } = await wallet.signAndSendTransaction(tx);
 
-            // Wait for confirmation
-            await conn.confirmTransaction(signature, 'confirmed');
+            // 4. Confirm with retry/fallback
+            await runWithFallback((conn) =>
+                conn.confirmTransaction(
+                    { signature, blockhash, lastValidBlockHeight },
+                    'confirmed'
+                )
+            );
 
+            // 5. Update UI
             totalRaised += amount; buyerCount++;
             updateStatsUI();
             addRecentPurchase(amount, publicKey.slice(-4));
 
-            document.getElementById('transactionMessage').innerHTML =
+            msgBox.classList.remove('hidden');
+            msgBox.innerHTML =
                 `<div class="text-green-700 bg-green-50 p-2 rounded-xl text-xs">✓ Success! ${Math.floor(amount*getCurrentTier().tokensPerSol).toLocaleString()} LIZZY reserved. <a href="https://explorer.solana.com/tx/${signature}" target="_blank" class="underline">View tx</a></div>`;
-            setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 5000);
+            setTimeout(() => { msgBox.innerHTML = ''; msgBox.classList.add('hidden'); }, 6000);
 
             await fetchBalance();
         } catch(err) {
             console.error('Buy error:', err);
-            document.getElementById('transactionMessage').innerHTML =
-                `<div class="text-red-600 bg-red-50 p-2 rounded-xl text-xs">✗ ${err.message.slice(0,80)}</div>`;
-            setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 4000);
+            let errorMsg = err.message || 'Transaction failed';
+            if (err.code === 4001) errorMsg = 'Transaction rejected in wallet.';
+            else if (errorMsg.includes('insufficient funds')) errorMsg = 'Insufficient SOL for transaction fees.';
+            else if (errorMsg.includes('blockhash')) errorMsg = 'Network stale — please retry.';
+            else if (errorMsg.includes('Load failed') || errorMsg.includes('fetch failed')) errorMsg = 'Network issue — please try again.';
+
+            msgBox.classList.remove('hidden');
+            msgBox.innerHTML = `<div class="text-red-600 bg-red-50 p-2 rounded-xl text-xs">✗ ${errorMsg.slice(0,100)}</div>`;
+            setTimeout(() => { msgBox.innerHTML = ''; msgBox.classList.add('hidden'); }, 5000);
         } finally {
             btn.disabled = false; btn.innerText = 'Buy $LIZZY'; updateTokenUI();
         }
