@@ -427,7 +427,7 @@
     const TIERS = [{ raised: 0, tokensPerSol: 280000 }, { raised: 900, tokensPerSol: 230000 }, { raised: 1800, tokensPerSol: 180000 }, { raised: 2500, tokensPerSol: 140000 }];
 
     // ===== RPC ENDPOINTS =====
-    // Primary Helius key, then backup Helius key, then public fallbacks
+    // Primary Helius key, backup Helius key, then public fallbacks
     const RPC_LIST = [
         'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1', // primary
         'https://mainnet.helius-rpc.com/?api-key=ef6c64a9-9800-4de0-aa7c-4c4b93a26f98', // backup
@@ -437,7 +437,7 @@
 
     let totalRaised = 27640, buyerCount = 26458, recentPurchases = [], publicKey = null, connection = null, wallet = null, currentBalance = 0;
     let isFetchingBalance = false;
-    let balanceKnown = false; // true only after a successful fetch
+    let balanceKnown = false;
 
     // ================================================================
     //  MOBILE → PHANTOM AUTO-REDIRECT HELPERS
@@ -588,7 +588,7 @@
                 ]);
                 currentBalance = bal / solanaWeb3.LAMPORTS_PER_SOL;
                 balanceDisplay.innerText = currentBalance.toFixed(4) + ' SOL';
-                connection = tempConnection; // working connection for buying
+                connection = tempConnection;
                 balanceKnown = true;
                 balanceErrorMsg.classList.add('hidden');
                 console.log(`✅ Balance ${currentBalance.toFixed(4)} SOL via ${rpcUrl}`);
@@ -607,7 +607,6 @@
             balanceErrorMsg.classList.remove('hidden');
             currentBalance = 0;
             balanceKnown = false;
-            // Ensure buying still has a connection to try
             if (!connection) {
                 connection = new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
             }
@@ -635,7 +634,6 @@
             let resp = await wallet.connect();
             publicKey = resp.publicKey.toString();
 
-            // Set a default connection immediately so buying never crashes
             if (!connection) {
                 connection = new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
             }
@@ -663,6 +661,9 @@
         updateTokenUI();
     }
 
+    // ================================================================
+    //  buyTokens — uses signAndSendTransaction (Phantom-recommended)
+    // ================================================================
     async function buyTokens() {
         if (redirectToPhantomIfMobile()) return;
 
@@ -673,11 +674,9 @@
         let btn = document.getElementById('buyTokenBtn');
         btn.disabled = true; btn.innerText = 'Processing...';
 
-        // Guarantee we have a connection
         const conn = connection || new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
 
         try {
-            let {blockhash} = await conn.getLatestBlockhash();
             let tx = new solanaWeb3.Transaction().add(
                 solanaWeb3.SystemProgram.transfer({
                     fromPubkey: new solanaWeb3.PublicKey(publicKey),
@@ -685,23 +684,25 @@
                     lamports: Math.floor(amount * solanaWeb3.LAMPORTS_PER_SOL)
                 })
             );
-            tx.recentBlockhash = blockhash;
             tx.feePayer = new solanaWeb3.PublicKey(publicKey);
 
-            let signed = await wallet.signTransaction(tx);
-            let sig = await conn.sendRawTransaction(signed.serialize());
-            await conn.confirmTransaction(sig, 'confirmed');
+            // Phantom-recommended: handles blockhash + broadcasting internally
+            const { signature } = await wallet.signAndSendTransaction(tx);
+
+            // Wait for confirmation
+            await conn.confirmTransaction(signature, 'confirmed');
 
             totalRaised += amount; buyerCount++;
             updateStatsUI();
             addRecentPurchase(amount, publicKey.slice(-4));
 
             document.getElementById('transactionMessage').innerHTML =
-                `<div class="text-green-700 bg-green-50 p-2 rounded-xl text-xs">✓ Success! ${Math.floor(amount*getCurrentTier().tokensPerSol).toLocaleString()} LIZZY reserved. <a href="https://explorer.solana.com/tx/${sig}" target="_blank" class="underline">View tx</a></div>`;
+                `<div class="text-green-700 bg-green-50 p-2 rounded-xl text-xs">✓ Success! ${Math.floor(amount*getCurrentTier().tokensPerSol).toLocaleString()} LIZZY reserved. <a href="https://explorer.solana.com/tx/${signature}" target="_blank" class="underline">View tx</a></div>`;
             setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 5000);
 
             await fetchBalance();
         } catch(err) {
+            console.error('Buy error:', err);
             document.getElementById('transactionMessage').innerHTML =
                 `<div class="text-red-600 bg-red-50 p-2 rounded-xl text-xs">✗ ${err.message.slice(0,80)}</div>`;
             setTimeout(() => document.getElementById('transactionMessage').innerHTML = '', 4000);
