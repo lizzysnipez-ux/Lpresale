@@ -5,7 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Lizzy — The Oracle of Solana | Presale</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- 1. Buffer polyfill FIRST — Phantom + web3.js require window.Buffer -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script>
+        if (typeof window.Buffer === 'undefined' && typeof Buffer !== 'undefined') {
+            window.Buffer = Buffer;
+        }
+        if (typeof window.Buffer === 'undefined') {
+            console.error('Buffer polyfill failed to load — Phantom signing will fail.');
+        }
+    </script>
+
+    <!-- 2. Then web3.js (pinned version so the global doesn't disappear) -->
     <script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -440,7 +454,8 @@
     let balanceKnown = false;
 
     // ================================================================
-    //  RPC HELPERS (mirroring your React code's retry/fallback pattern)
+    //  RPC HELPERS — retry with backoff, then fall through the RPC list
+    //  (same pattern as your React app)
     // ================================================================
     const fetchWithRetry = async (fn, maxAttempts = 3, initialDelayMs = 800) => {
         let delayMs = initialDelayMs;
@@ -465,14 +480,12 @@
         }
     };
 
-    // Try each RPC in order until one succeeds
     const runWithFallback = async (fn) => {
         let lastError = null;
         for (const rpcUrl of RPC_LIST) {
             try {
                 const conn = new solanaWeb3.Connection(rpcUrl, 'confirmed');
                 const result = await fetchWithRetry(() => fn(conn));
-                // Remember the working connection
                 if (!connection) connection = conn;
                 return result;
             } catch (e) {
@@ -604,7 +617,7 @@
     }
 
     // ================================================================
-    //  BALANCE FETCH — retry + fallback across all RPCs
+    //  BALANCE FETCH — retry + fallback
     // ================================================================
     async function fetchBalance() {
         if (!publicKey) return;
@@ -688,7 +701,6 @@
 
     // ================================================================
     //  buyTokens — signAndSendTransaction + priority fee + retry fallback
-    //  Mirrors the pattern that makes your React app reliable.
     // ================================================================
     async function buyTokens() {
         if (redirectToPhantomIfMobile()) return;
