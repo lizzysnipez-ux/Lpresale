@@ -6,7 +6,7 @@
     <title>Lizzy — The Oracle of Solana | Presale</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-    <!-- 1. MANUAL BUFFER POLYFILL (MUST BE FIRST) -->
+    <!-- 1. BUFFER POLYFILL -->
     <script>
         if (typeof Buffer === "undefined") {
             window.Buffer = {
@@ -22,14 +22,13 @@
                     } else if (input instanceof ArrayBuffer) {
                         return new Uint8Array(input);
                     }
-                    throw new TypeError("Unsupported input type for Buffer.from");
+                    throw new TypeError("Unsupported input");
                 }
             };
-            console.log('✅ Manual Buffer polyfill injected');
         }
     </script>
 
-    <!-- 2. SOLANA WEB3.JS (Pinned version) -->
+    <!-- 2. SOLANA WEB3 -->
     <script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -266,7 +265,6 @@
         { raised: 2500, tokensPerSol: 140000 }
     ];
 
-    // RPC endpoints: reliable public first, then your Helius keys
     const RPC_LIST = [
         'https://solana-rpc.publicnode.com',
         'https://mainnet.helius-rpc.com/?api-key=9f9652cc-974b-4321-ac7f-3b503b4bc1f1',
@@ -462,11 +460,12 @@
 
         for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
             try {
-                // 1. Fetch blockhash and correctly destructure the nested response
+                // === CRITICAL FIX: Correctly destructure getLatestBlockhashAndContext ===
                 const rpcResponse = await tryRpc(conn =>
                     conn.getLatestBlockhashAndContext('confirmed')
                 );
 
+                // rpcResponse = { context: { slot }, value: { blockhash, lastValidBlockHeight } }
                 const blockhash = rpcResponse?.value?.blockhash;
                 const lastValidBlockHeight = rpcResponse?.value?.lastValidBlockHeight;
                 const context = rpcResponse?.context;
@@ -475,7 +474,6 @@
                     throw new Error('RPC returned empty blockhash. Retrying...');
                 }
 
-                // 2. Build the transaction
                 const tx = new solanaWeb3.Transaction({
                     recentBlockhash: blockhash,
                     feePayer: new solanaWeb3.PublicKey(publicKey)
@@ -488,27 +486,11 @@
                     lamports: Math.floor(amount * solanaWeb3.LAMPORTS_PER_SOL)
                 }));
 
-                // ============================================================
-                // 3. PRE-FLIGHT SIMULATION (Critical for Phantom's "Request Blocked" warning)
-                // ============================================================
-                const conn = connection || new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
-                console.log('🔍 Running pre-flight simulation...');
-                const simulation = await conn.simulateTransaction(tx, {
-                    commitment: 'confirmed',
-                    sigVerify: false // Pre-flight check, signature not yet available
-                });
-
-                if (simulation.value.err) {
-                    throw new Error(`Pre-flight simulation failed: ${JSON.stringify(simulation.value.err)}`);
-                }
-                console.log('✅ Pre-flight simulation passed.');
-
-                // 4. Sign and send the validated transaction
                 const { signature } = await wallet.signAndSendTransaction(tx, {
                     minContextSlot: context?.slot || 0
                 });
 
-                // 5. Confirm using the exact same blockhash
+                const conn = connection || new solanaWeb3.Connection(RPC_LIST[0], 'confirmed');
                 await conn.confirmTransaction(
                     { signature, blockhash, lastValidBlockHeight },
                     'confirmed'
